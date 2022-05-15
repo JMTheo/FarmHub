@@ -3,6 +3,8 @@ import 'package:bot_toast/bot_toast.dart';
 
 import 'package:automacao_horta/screens/home.dart';
 
+import 'constants.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -18,9 +20,9 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData.light().copyWith(
           colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: const Color(0xFF24AF77),
+            primary: kDefaultColorGreen,
           ),
-          textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+          textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)),
           scaffoldBackgroundColor: const Color(0xFFFFFFFE)),
 
       home: Home(),
