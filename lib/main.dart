@@ -18,12 +18,12 @@ class MyApp extends StatelessWidget {
       title: 'iPlant',
       builder: BotToastInit(), //1. call BotToastInit
       navigatorObservers: [BotToastNavigatorObserver()],
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData.dark().copyWith(
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: kDefaultColorGreen,
           ),
           textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)),
-          scaffoldBackgroundColor: const Color(0xFFFFFFFE)),
+          scaffoldBackgroundColor: const Color(0XFF0A0E21)),
 
       home: Home(),
     );

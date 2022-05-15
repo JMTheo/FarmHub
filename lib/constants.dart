@@ -25,13 +25,17 @@ const TextStyle kTemperaturTitle = TextStyle(
 //finals 0xFF006949 - 0xFF2d6f28  //0xFF35CE8D green accent / 0xFF31A05F green opa => 0xFF058552
 const Color kDefaultColorGreen = Color(0xFF24AF77);
 
-const kLabelTextStyle = TextStyle(
+const TextStyle kLabelTextStyle = TextStyle(
   fontSize: 15.0,
   color: Colors.white,
 );
 
-const kNumbersTextStyle = TextStyle(
+const TextStyle kNumbersTextStyle = TextStyle(
   fontSize: 30.0,
   fontWeight: FontWeight.w900,
 );
-const kActiveCardColor = Color(0xFF24AF77);
+const kActiveCardColor = Color(0xFF178457);
+
+const Color
+
+
