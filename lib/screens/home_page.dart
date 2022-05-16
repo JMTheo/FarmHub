@@ -4,22 +4,32 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'package:automacao_horta/components/bottom_card.dart';
 import 'package:automacao_horta/components/card_plant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../controller/controller.dart';
 
 final controller = Controller();
 
-class Home extends StatefulWidget {
+class HomePage extends StatefulWidget {
   @override
-  _HomeState createState() => _HomeState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _HomeState extends State<Home> {
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Automação da horta')),
+        title: const Center(
+          child: Text('Automação da horta'),
+        ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/login');
+              },
+              icon: const Icon(FontAwesomeIcons.triangleExclamation)),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

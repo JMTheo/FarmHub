@@ -37,3 +37,5 @@ const TextStyle kNumbersTextStyle = TextStyle(
 const Color kActiveCardColor = Color(0xFF1D1E33);
 
 const Color kScaffoldBGColor = Color(0XFF0A0E21);
+
+const Color kAltAccentColour = Color(0xFFEB1555);
