@@ -34,8 +34,6 @@ const TextStyle kNumbersTextStyle = TextStyle(
   fontSize: 30.0,
   fontWeight: FontWeight.w900,
 );
-const kActiveCardColor = Color(0xFF178457);
+const Color kActiveCardColor = Color(0xFF1D1E33);
 
-const Color
-
-
+const Color kScaffoldBGColor = Color(0XFF0A0E21);

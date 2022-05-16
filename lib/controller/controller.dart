@@ -61,7 +61,7 @@ abstract class ControllerBase with Store {
     } else {
       msg = 'dj';
     }
-    //enviarMensagem(msg);
+    enviarMensagem(msg);
   }
 
   @action
@@ -75,7 +75,7 @@ abstract class ControllerBase with Store {
               animationDuration: const Duration(seconds: 1),
               textStyle: const TextStyle(fontSize: 25.0));
         });
-    //enviarMensagem('a');
+    enviarMensagem('a');
   }
 
   void enviarMensagem(String msg) {

@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData.dark().copyWith(
           colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: kDefaultColorGreen,
+            primary: kActiveCardColor,
           ),
           textTheme: const TextTheme(bodyText2: TextStyle(color: Colors.white)),
-          scaffoldBackgroundColor: const Color(0XFF0A0E21)),
+          scaffoldBackgroundColor: kScaffoldBGColor),
 
       home: Home(),
     );
