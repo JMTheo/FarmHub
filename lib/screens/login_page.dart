@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../components/custom_elevated_button.dart';
+import '../components/outline_text_form.dart';
 import '../constants.dart';
 import 'home_page.dart';
 import 'register_page.dart';
@@ -21,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        //TODO:Ajustar cor do Slider
         padding: const EdgeInsets.all(20),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -41,38 +41,22 @@ class _LoginPageState extends State<LoginPage> {
               key: _formKey,
               child: Column(
                 children: [
-                  TextFormField(
+                  OutlineTextForm(
+                    iconData: Icons.email,
+                    hintTxt: 'Digite o seu e-mail',
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      hintText: 'Digite o seu e-mail',
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, digite uma senha.';
-                      }
-                      return null;
-                    },
-                    maxLines: 1,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock),
-                      hintText: 'Senha',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                  OutlineTextForm(
+                    hintTxt: 'Senha',
+                    iconData: Icons.lock,
+                    validator: (value) => (value == null || value.isEmpty)
+                        ? 'Por favor, digite uma senha.'
+                        : null,
                   ),
                   const SizedBox(
                     height: 20,

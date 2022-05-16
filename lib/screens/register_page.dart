@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../components/custom_elevated_button.dart';
+import '../components/outline_text_form.dart';
 import '../constants.dart';
 import 'login_page.dart';
 
@@ -15,7 +16,6 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
-  //TODO:Ajustar cor do Slider
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,40 +42,24 @@ class _RegisterPageState extends State<RegisterPage> {
                   Row(
                     children: [
                       Expanded(
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Campo obrigatório';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Nome',
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                        child: OutlineTextForm(
+                          hintTxt: 'Nome',
+                          iconData: Icons.person,
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? 'Campo obrigatório.'
+                              : null,
                         ),
                       ),
                       const SizedBox(
                         width: 20,
                       ),
                       Expanded(
-                        child: TextFormField(
-                          validator: (String? value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Campo obirgatório';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            hintText: 'Sobrenome',
-                            prefixIcon: const Icon(Icons.person),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
+                        child: OutlineTextForm(
+                          hintTxt: 'Sobrenome',
+                          iconData: Icons.person,
+                          validator: (value) => (value == null || value.isEmpty)
+                              ? 'Campo obrigatório.'
+                              : null,
                         ),
                       ),
                     ],
@@ -83,38 +67,22 @@ class _RegisterPageState extends State<RegisterPage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
+                  OutlineTextForm(
+                    hintTxt: 'Digite o seu e-mail',
+                    iconData: Icons.email,
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
-                    maxLines: 1,
-                    decoration: InputDecoration(
-                      hintText: 'Digite o seu e-mail',
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  TextFormField(
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor, digite a sua senha';
-                      }
-                      return null;
-                    },
-                    maxLines: 1,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.lock),
-                      hintText: 'Digite a sua senha',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
+                  OutlineTextForm(
+                    hintTxt: 'Digite a sua senha',
+                    iconData: Icons.email,
+                    validator: (value) => (value == null || value.isEmpty)
+                        ? 'Por favor, digite a sua senha'
+                        : null,
                   ),
                   const SizedBox(
                     height: 20,
