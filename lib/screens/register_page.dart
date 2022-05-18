@@ -45,6 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: OutlineTextForm(
                           hintTxt: 'Nome',
                           iconData: Icons.person,
+                          hideText: false,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
                               : null,
@@ -57,6 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: OutlineTextForm(
                           hintTxt: 'Sobrenome',
                           iconData: Icons.person,
+                          hideText: false,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
                               : null,
@@ -70,6 +72,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   OutlineTextForm(
                     hintTxt: 'Digite o seu e-mail',
                     iconData: Icons.email,
+                    hideText: false,
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
@@ -80,6 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   OutlineTextForm(
                     hintTxt: 'Digite a sua senha',
                     iconData: Icons.email,
+                    hideText: true,
                     validator: (value) => (value == null || value.isEmpty)
                         ? 'Por favor, digite a sua senha'
                         : null,
@@ -88,10 +92,19 @@ class _RegisterPageState extends State<RegisterPage> {
                     height: 20,
                   ),
                   CustomElevetedButton(
-                      onTap: () {
-                        if (_formKey.currentState!.validate()) {}
-                      },
-                      btnLabel: 'Cadastrar-se'),
+                    btnLabel: 'Cadastrar-se',
+                    onTap: () {
+                      if (_formKey.currentState!.validate()) {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                const LoginPage(title: 'Login'),
+                          ),
+                        );
+                      }
+                    },
+                  ),
                   const SizedBox(
                     height: 20,
                   ),

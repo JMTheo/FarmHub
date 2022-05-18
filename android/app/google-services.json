@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "712992465403",
+    "project_id": "iplant-580e3",
+    "storage_bucket": "iplant-580e3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:712992465403:android:ab3962cf28b7d01be62b5e",
+        "android_client_info": {
+          "package_name": "uam.tcc.automacao_horta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "712992465403-l2p3ut02am3bn1hfejbmg4l634ruhtnq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDv8ko6EIZw0jLlwOQ8T7sLS42nM7MYpUw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "712992465403-l2p3ut02am3bn1hfejbmg4l634ruhtnq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

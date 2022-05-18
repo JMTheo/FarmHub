@@ -4,7 +4,7 @@ import 'package:email_validator/email_validator.dart';
 import '../components/custom_elevated_button.dart';
 import '../components/outline_text_form.dart';
 import '../constants.dart';
-import 'home_page.dart';
+import 'detailed_plant.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -44,6 +44,7 @@ class _LoginPageState extends State<LoginPage> {
                   OutlineTextForm(
                     iconData: Icons.email,
                     hintTxt: 'Digite o seu e-mail',
+                    hideText: false,
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
@@ -54,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                   OutlineTextForm(
                     hintTxt: 'Senha',
                     iconData: Icons.lock,
+                    hideText: true,
                     validator: (value) => (value == null || value.isEmpty)
                         ? 'Por favor, digite uma senha.'
                         : null,
@@ -66,7 +68,8 @@ class _LoginPageState extends State<LoginPage> {
                         if (_formKey.currentState!.validate()) {
                           Navigator.pushReplacement(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
+                            MaterialPageRoute(
+                                builder: (context) => DetailedPlantPage()),
                           );
                         }
                       },

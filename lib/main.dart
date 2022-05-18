@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
 
-import '/screens/home_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+import '/screens/detailed_plant.dart';
 import '/screens/login_page.dart';
 
+import 'firebase_options.dart';
 import 'constants.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -31,7 +36,7 @@ class MyApp extends StatelessWidget {
 
       initialRoute: '/login',
       routes: {
-        '/home': (context) => HomePage(),
+        '/home': (context) => DetailedPlantPage(),
         '/login': (context) => const LoginPage(title: 'Login'),
       },
     );

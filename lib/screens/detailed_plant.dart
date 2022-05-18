@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import 'package:automacao_horta/components/bottom_card.dart';
-import 'package:automacao_horta/components/card_plant.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
+import '../components/bottom_card.dart';
+import '../components/card_plant.dart';
 import '../controller/controller.dart';
 
 final controller = Controller();
 
-class HomePage extends StatefulWidget {
+class DetailedPlantPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _DetailedPlantPageState createState() => _DetailedPlantPageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _DetailedPlantPageState extends State<DetailedPlantPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +26,7 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.pushNamed(context, '/login');
               },
-              icon: const Icon(FontAwesomeIcons.triangleExclamation)),
+              icon: const Icon(Icons.person)),
         ],
       ),
       body: Column(
