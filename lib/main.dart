@@ -4,7 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import '/screens/detailed_plant.dart';
-import '/screens/login_page.dart';
+import '/screens/auth_page.dart';
 
 import 'firebase_options.dart';
 import 'constants.dart';
@@ -36,26 +36,31 @@ class MyApp extends StatelessWidget {
         hintColor: Colors.white,
         scaffoldBackgroundColor: kScaffoldBGColor,
       ),
+      home: MainPage(),
+    );
+  }
+}
 
-      initialRoute: '/login',
-      routes: {
-        '/home': (context) => DetailedPlantPage(),
-        '/login': (context) => StreamBuilder<User?>(
-              stream: FirebaseAuth.instance.authStateChanges(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (snapshot.hasError) {
-                  return const Center(
-                      child: Text('Problema ao efetuar o login'));
-                } else if (snapshot.hasData) {
-                  return DetailedPlantPage();
-                } else {
-                  return const LoginPage(title: 'Login');
-                }
-              },
-            )
-      },
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Problema ao efetuar o login'));
+          } else if (snapshot.hasData) {
+            return DetailedPlantPage();
+          } else {
+            return AuthPage();
+          }
+        },
+      ),
     );
   }
 }

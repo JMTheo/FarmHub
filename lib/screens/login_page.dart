@@ -14,8 +14,13 @@ import '../main.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key? key, required this.title}) : super(key: key);
+  const LoginPage({
+    Key? key,
+    required this.title,
+    required this.onClickedSignUp,
+  }) : super(key: key);
   final String title;
+  final VoidCallback onClickedSignUp;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -96,14 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       const Text('Ainda não cadastrado?'),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    const RegisterPage(title: 'Cadastro')),
-                          );
-                        },
+                        onPressed: widget.onClickedSignUp,
                         child: const Text('Criar uma conta',
                             style: TextStyle(color: kDefaultColorGreen)),
                       ),

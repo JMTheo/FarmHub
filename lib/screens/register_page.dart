@@ -1,16 +1,25 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../components/custom_elevated_button.dart';
 import '../components/outline_text_form.dart';
+import '../components/toast_util.dart';
+
 import '../constants.dart';
+import '../enums/ToastOptions.dart';
 import '../main.dart';
+
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  const RegisterPage({Key? key, required this.title}) : super(key: key);
+  const RegisterPage({
+    Key? key,
+    required this.title,
+    required this.onClickedSignIn,
+  }) : super(key: key);
   final String title;
+  final Function() onClickedSignIn;
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -59,6 +68,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintTxt: 'Nome',
                           iconData: Icons.person,
                           hideText: false,
+                          textInputAction: TextInputAction.next,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
                               : null,
@@ -72,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintTxt: 'Sobrenome',
                           iconData: Icons.person,
                           hideText: false,
+                          textInputAction: TextInputAction.next,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
                               : null,
@@ -87,6 +98,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     iconData: Icons.email,
                     hideText: false,
                     txtController: emailController,
+                    textInputAction: TextInputAction.next,
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
@@ -99,8 +112,10 @@ class _RegisterPageState extends State<RegisterPage> {
                     iconData: Icons.email,
                     hideText: true,
                     txtController: passwordController,
-                    validator: (value) => (value == null || value.isEmpty)
-                        ? 'Por favor, digite a sua senha'
+                    textInputAction: TextInputAction.send,
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) => (value != null && value.length < 6)
+                        ? 'A senha deve contar 6 caracteres'
                         : null,
                   ),
                   const SizedBox(
@@ -122,15 +137,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: [
                       const Text('Já cadastrado?'),
                       TextButton(
-                        onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  const LoginPage(title: 'Login'),
-                            ),
-                          );
-                        },
+                        onPressed: widget.onClickedSignIn,
                         child: const Text(
                           'Entrar',
                           style: TextStyle(color: kDefaultColorGreen),
@@ -149,6 +156,11 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future signUp() async {
     FocusManager.instance.primaryFocus?.unfocus();
+
+    //Verifica se o formulário foi preenchido.
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) return;
+
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -162,11 +174,31 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text.trim().toLowerCase(),
           password: passwordController.text.trim());
     } on FirebaseAuthException catch (e) {
-      print(e);
+      //weak-password
+      //email-already-in-use
+      switch (e.code) {
+        case 'weak-password':
+          ToastUtil(
+                  text: 'A senha deve conter ao menos 6 caracteres',
+                  type: ToastOption.error)
+              .getToast();
+          break;
+        case 'email-already-in-use':
+          ToastUtil(text: 'Email já está cadastrado', type: ToastOption.error)
+              .getToast();
+          break;
+        default:
+          ToastUtil(
+                  type: ToastOption.error,
+                  text:
+                      'Erro inesperado, contate o adiministrador do aplicativo')
+              .getToast();
+          print('Erro ao realizar login: ${e.code}');
+          break;
+      }
     }
-
     WidgetsBinding.instance?.addPostFrameCallback((_) {
-      navigatorKey.currentState!.pushNamed('/login');
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
     });
   }
 }
