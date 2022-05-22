@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
-
 import 'package:firebase_core/firebase_core.dart';
 
 import '/screens/detailed_plant.dart';
@@ -15,6 +15,8 @@ Future<void> main() async {
   runApp(MyApp());
 }
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 //cor verdinha 0xFF35CE8D | bariol
 class MyApp extends StatelessWidget {
   // TODO: Acrescentar a fonte bariol
@@ -22,6 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'iPlant',
+      navigatorKey: navigatorKey,
       builder: BotToastInit(), //1. call BotToastInit
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData.dark().copyWith(
@@ -37,7 +40,21 @@ class MyApp extends StatelessWidget {
       initialRoute: '/login',
       routes: {
         '/home': (context) => DetailedPlantPage(),
-        '/login': (context) => const LoginPage(title: 'Login'),
+        '/login': (context) => StreamBuilder<User?>(
+              stream: FirebaseAuth.instance.authStateChanges(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return const Center(
+                      child: Text('Problema ao efetuar o login'));
+                } else if (snapshot.hasData) {
+                  return DetailedPlantPage();
+                } else {
+                  return const LoginPage(title: 'Login');
+                }
+              },
+            )
       },
     );
   }

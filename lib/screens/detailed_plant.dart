@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -14,6 +15,8 @@ class DetailedPlantPage extends StatefulWidget {
 }
 
 class _DetailedPlantPageState extends State<DetailedPlantPage> {
+  final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +27,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
         actions: <Widget>[
           IconButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/login');
+                FirebaseAuth.instance.signOut();
               },
               icon: const Icon(Icons.person)),
         ],
@@ -40,6 +43,10 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
+                  //TODO: Remover essa parte de debug
+                  Text(
+                    user.email!,
+                  ),
                   Observer(builder: (_) {
                     return CardPlant(
                       urlImg: 'assets/img/hortela.png',

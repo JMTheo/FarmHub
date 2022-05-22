@@ -6,16 +6,19 @@ class OutlineTextForm extends StatelessWidget {
     required this.iconData,
     required this.validator,
     required this.hideText,
+    this.txtController,
   });
 
   final bool hideText;
   final String hintTxt;
   final IconData iconData;
   final String? Function(String?)? validator;
+  final TextEditingController? txtController;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: txtController,
       validator: validator,
       obscureText: hideText,
       maxLines: 1,

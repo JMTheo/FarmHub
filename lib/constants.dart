@@ -39,3 +39,17 @@ const Color kActiveCardColor = Color(0xFF1D1E33);
 const Color kScaffoldBGColor = Color(0XFF0A0E21);
 
 const Color kAltAccentColour = Color(0xFFEB1555);
+
+const kErrorToast = {
+  'bgColor': Colors.red,
+  'txtColor': Colors.white,
+};
+
+const kWarningToast = {
+  'bgColor': Colors.amber,
+  'txtColor': Colors.white,
+};
+const kSuccessToast = {
+  'bgColor': Colors.green,
+  'txtColor': Colors.white,
+};
