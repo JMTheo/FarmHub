@@ -11,6 +11,7 @@ import '../components/outline_text_form.dart';
 import '../constants.dart';
 import '../main.dart';
 
+import 'forgot_password.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -96,6 +97,17 @@ class _LoginPageState extends State<LoginPage> {
                   const SizedBox(
                     height: 20,
                   ),
+                  GestureDetector(
+                    child: const Text(
+                      'Esqueceu a senha?',
+                      style: TextStyle(
+                        color: kDefaultColorGreen,
+                        fontSize: 15.0,
+                      ),
+                    ),
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => ForgotPassWordPage())),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -137,22 +149,23 @@ class _LoginPageState extends State<LoginPage> {
       switch (e.code) {
         case 'too-many-requests':
           ToastUtil(
-                  text:
-                      'Muitas tentativas para realizar o login, aguarde um monento!',
-                  type: ToastOption.error)
-              .getToast();
+            text:
+                'Muitas tentativas para realizar o login, aguarde um monento!',
+            type: ToastOption.error,
+          ).getToast();
           break;
         case 'user-not-found':
         case 'wrong-password':
-          ToastUtil(text: 'Email ou senha incorretos!', type: ToastOption.error)
-              .getToast();
+          ToastUtil(
+            text: 'Email ou senha incorretos!',
+            type: ToastOption.error,
+          ).getToast();
           break;
         default:
           ToastUtil(
-                  type: ToastOption.error,
-                  text:
-                      'Erro inesperado, contate o adiministrador do aplicativo')
-              .getToast();
+            type: ToastOption.error,
+            text: 'Erro inesperado, contate o adiministrador do aplicativo',
+          ).getToast();
           print('Erro ao realizar login: ${e.code}');
           break;
       }

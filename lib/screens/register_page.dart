@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
             Form(
               key: _formKey,
               child: Column(
-                children: [
+                children: <Widget>[
                   Row(
                     children: [
                       Expanded(
@@ -134,7 +134,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: <Widget>[
                       const Text('Já cadastrado?'),
                       TextButton(
                         onPressed: widget.onClickedSignIn,
@@ -179,20 +179,21 @@ class _RegisterPageState extends State<RegisterPage> {
       switch (e.code) {
         case 'weak-password':
           ToastUtil(
-                  text: 'A senha deve conter ao menos 6 caracteres',
-                  type: ToastOption.error)
-              .getToast();
+            text: 'A senha deve conter ao menos 6 caracteres',
+            type: ToastOption.error,
+          ).getToast();
           break;
         case 'email-already-in-use':
-          ToastUtil(text: 'Email já está cadastrado', type: ToastOption.error)
-              .getToast();
+          ToastUtil(
+            text: 'Email já está cadastrado',
+            type: ToastOption.error,
+          ).getToast();
           break;
         default:
           ToastUtil(
-                  type: ToastOption.error,
-                  text:
-                      'Erro inesperado, contate o adiministrador do aplicativo')
-              .getToast();
+            type: ToastOption.error,
+            text: 'Erro inesperado, contate o adiministrador do aplicativo',
+          ).getToast();
           print('Erro ao realizar login: ${e.code}');
           break;
       }
