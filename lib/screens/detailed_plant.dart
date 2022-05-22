@@ -44,8 +44,10 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
                   //TODO: Remover essa parte de debug
-                  Text(
-                    user.email!,
+                  Center(
+                    child: Text(
+                      user.email!,
+                    ),
                   ),
                   Observer(builder: (_) {
                     return CardPlant(

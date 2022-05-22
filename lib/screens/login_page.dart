@@ -119,16 +119,18 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future sigIn() async {
+    FocusManager.instance.primaryFocus?.unfocus();
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (context) => const Center(
-              child: CircularProgressIndicator(),
-            ));
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
 
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
+        email: emailController.text.trim().toLowerCase(),
         password: passwordController.text.trim(),
       );
       ToastUtil(type: ToastOption.success, text: 'Sucesso ao logar!');

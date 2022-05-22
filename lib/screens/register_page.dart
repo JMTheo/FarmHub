@@ -1,9 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../components/custom_elevated_button.dart';
 import '../components/outline_text_form.dart';
 import '../constants.dart';
+import '../main.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -16,6 +18,17 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,6 +86,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintTxt: 'Digite o seu e-mail',
                     iconData: Icons.email,
                     hideText: false,
+                    txtController: emailController,
                     validator: (value) => EmailValidator.validate(value!)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
@@ -84,6 +98,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintTxt: 'Digite a sua senha',
                     iconData: Icons.email,
                     hideText: true,
+                    txtController: passwordController,
                     validator: (value) => (value == null || value.isEmpty)
                         ? 'Por favor, digite a sua senha'
                         : null,
@@ -95,13 +110,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     btnLabel: 'Cadastrar-se',
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                const LoginPage(title: 'Login'),
-                          ),
-                        );
+                        signUp();
                       }
                     },
                   ),
@@ -136,5 +145,28 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  Future signUp() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => const Center(
+        child: CircularProgressIndicator(),
+      ),
+    );
+
+    try {
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailController.text.trim().toLowerCase(),
+          password: passwordController.text.trim());
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      navigatorKey.currentState!.pushNamed('/login');
+    });
   }
 }
