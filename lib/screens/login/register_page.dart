@@ -220,7 +220,7 @@ class _RegisterPageState extends State<RegisterPage> {
           break;
       }
     }
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     });
   }

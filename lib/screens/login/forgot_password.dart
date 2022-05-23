@@ -115,7 +115,7 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
         type: ToastOption.success,
       ).getToast();
 
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         navigatorKey.currentState!.popUntil((route) => route.isFirst);
       });
     } on FirebaseAuthException catch (e) {

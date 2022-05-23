@@ -174,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
     }
     //navigatorKey.currentState!.popUntil((route) => true);
 
-    WidgetsBinding.instance?.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     });
   }

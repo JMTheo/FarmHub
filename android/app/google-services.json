@@ -29,6 +29,13 @@
             {
               "client_id": "712992465403-l2p3ut02am3bn1hfejbmg4l634ruhtnq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "712992465403-i9a6kugq0uf008ob7jdgcchthf84s5f6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uam.tcc.automacaoHorta"
+              }
             }
           ]
         }
