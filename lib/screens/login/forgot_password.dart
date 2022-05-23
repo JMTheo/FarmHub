@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
-import '../components/custom_elevated_button.dart';
-import '../components/outline_text_form.dart';
-import '../components/toast_util.dart';
+import '../../components/custom_elevated_button.dart';
+import '../../components/outline_text_form.dart';
+import '../../components/toast_util.dart';
 
-import '../enums/ToastOptions.dart';
+import '../../enums/ToastOptions.dart';
 
-import '../screens/auth_page.dart';
+import 'auth_page.dart';
 
-import '../constants.dart';
-import '../main.dart';
+import '../../constants.dart';
+import '../../main.dart';
 
 class ForgotPassWordPage extends StatefulWidget {
   ForgotPassWordPage({Key? key}) : super(key: key);

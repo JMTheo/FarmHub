@@ -1,5 +1,5 @@
-import 'package:automacao_horta/screens/login_page.dart';
-import 'package:automacao_horta/screens/register_page.dart';
+import 'package:automacao_horta/screens/login/login_page.dart';
+import 'package:automacao_horta/screens/login/register_page.dart';
 import 'package:flutter/material.dart';
 
 class AuthPage extends StatefulWidget {
