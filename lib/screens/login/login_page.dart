@@ -79,9 +79,11 @@ class _LoginPageState extends State<LoginPage> {
                     hintTxt: 'Senha',
                     iconData: Icons.lock,
                     hideText: true,
+                    textInputAction: TextInputAction.go,
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
                     txtController: passwordController,
-                    validator: (value) => (value == null || value.isEmpty)
-                        ? 'Por favor, digite uma senha.'
+                    validator: (value) => (value != null && value.length < 6)
+                        ? 'A senha deve contar no mínimo 6 caracteres'
                         : null,
                   ),
                   const SizedBox(

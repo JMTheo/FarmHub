@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../../components/custom_elevated_button.dart';
@@ -9,8 +10,6 @@ import '../../components/toast_util.dart';
 import '../../constants.dart';
 import '../../enums/ToastOptions.dart';
 import '../../main.dart';
-
-import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({
@@ -29,6 +28,9 @@ class _RegisterPageState extends State<RegisterPage> {
   final _formKey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final nameController = TextEditingController();
+  final surnameController = TextEditingController();
+  final db = FirebaseFirestore.instance;
 
   @override
   void dispose() {
@@ -68,6 +70,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintTxt: 'Nome',
                           iconData: Icons.person,
                           hideText: false,
+                          txtController: nameController,
                           textInputAction: TextInputAction.next,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
@@ -82,6 +85,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           hintTxt: 'Sobrenome',
                           iconData: Icons.person,
                           hideText: false,
+                          txtController: surnameController,
                           textInputAction: TextInputAction.next,
                           validator: (value) => (value == null || value.isEmpty)
                               ? 'Campo obrigatório.'
@@ -109,13 +113,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                   OutlineTextForm(
                     hintTxt: 'Digite a sua senha',
-                    iconData: Icons.email,
+                    iconData: Icons.lock,
                     hideText: true,
                     txtController: passwordController,
-                    textInputAction: TextInputAction.send,
+                    textInputAction: TextInputAction.go,
                     autoValidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) => (value != null && value.length < 6)
-                        ? 'A senha deve contar 6 caracteres'
+                        ? 'A senha deve contar no mínimo 6 caracteres'
                         : null,
                   ),
                   const SizedBox(
@@ -154,6 +158,18 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  //TODO: Externarm em um service, refatorar em Provider e deixar um controller abstraindo tudo
+  Future addUser(String uid) async {
+    final user = <String, String>{
+      "name": nameController.text.trim(),
+      "surname": surnameController.text.trim(),
+      "uid_auth": uid,
+    };
+
+    db.collection("users").add(user).then((DocumentReference doc) =>
+        print('DocumentSnapshot added with ID: ${doc.id}'));
+  }
+
   Future signUp() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
@@ -170,9 +186,15 @@ class _RegisterPageState extends State<RegisterPage> {
     );
 
     try {
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text.trim().toLowerCase(),
-          password: passwordController.text.trim());
+      final User? user = (await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(
+                  email: emailController.text.trim().toLowerCase(),
+                  password: passwordController.text.trim()))
+          .user;
+
+      if (user != null) {
+        addUser(user.uid);
+      }
     } on FirebaseAuthException catch (e) {
       //weak-password
       //email-already-in-use
