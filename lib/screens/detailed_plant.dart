@@ -43,12 +43,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
               child: ListView(
                 scrollDirection: Axis.horizontal,
                 children: <Widget>[
-                  //TODO: Remover essa parte de debug
-                  Center(
-                    child: Text(
-                      user.email!,
-                    ),
-                  ),
                   Observer(builder: (_) {
                     return CardPlant(
                       urlImg: 'assets/img/hortela.png',
