@@ -45,7 +45,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                 children: <Widget>[
                   Observer(builder: (_) {
                     return CardPlant(
-                      urlImg: 'assets/img/hortela.png',
+                      urlImg: 'assets/img/fruits/apple.png',
                       apelidoPlanta: 'Cleitinho',
                       especiePlanta: 'Hortelã',
                       estadoLampada: controller.estadoLampada,

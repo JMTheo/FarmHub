@@ -49,10 +49,13 @@ class _CardPlantState extends State<CardPlant> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Center(
-            child: Image.asset(
-              widget.urlImg,
-              height: 200.0,
-              width: 200.0,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Image.asset(
+                widget.urlImg,
+                height: 150.0,
+                width: 150.0,
+              ),
             ),
           ),
           const SizedBox(height: 80.0),
