@@ -1,11 +1,6 @@
-# iplant
+# FarmHub
 
-Cliente Mobile PTCC
-
-TO DO:
-
-- [ ] Arranjar um nome melhor para o projeto
-
+Cliente Mobile Projeto de softwaew
 ## DEMO
 
 ![demo](https://media.giphy.com/media/4yjhdpNzgAAsy9OH1v/giphy.gif)
