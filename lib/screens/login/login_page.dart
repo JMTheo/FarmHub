@@ -12,7 +12,6 @@ import '../../constants.dart';
 import '../../main.dart';
 
 import 'forgot_password.dart';
-import 'register_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({
@@ -50,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'iPlant',
+              'FarmHub',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 40,

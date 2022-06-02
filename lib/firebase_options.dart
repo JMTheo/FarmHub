@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '712992465403',
     projectId: 'iplant-580e3',
     storageBucket: 'iplant-580e3.appspot.com',
-    iosClientId: '712992465403-i9a6kugq0uf008ob7jdgcchthf84s5f6.apps.googleusercontent.com',
+    iosClientId:
+        '712992465403-i9a6kugq0uf008ob7jdgcchthf84s5f6.apps.googleusercontent.com',
     iosBundleId: 'uam.tcc.automacaoHorta',
   );
 }

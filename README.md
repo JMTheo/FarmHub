@@ -1,11 +1,13 @@
-# iPlant
+# iplant
 
 Cliente Mobile PTCC
 
 TO DO:
+
 - [ ] Arranjar um nome melhor para o projeto
 
 ## DEMO
+
 ![demo](https://media.giphy.com/media/4yjhdpNzgAAsy9OH1v/giphy.gif)
 
 ## Instalação

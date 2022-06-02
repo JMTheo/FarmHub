@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
-
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:mqtt_client/mqtt_client.dart'; // as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
@@ -11,7 +12,7 @@ import 'package:mobx/mobx.dart';
 part 'controller.g.dart';
 
 //A cada alteração no Observable rodar esse comando no terminal
-// flutter packages pub run build_runner build
+// flutter pub run build_runner watch
 
 class Controller = ControllerBase with _$Controller;
 
@@ -33,10 +34,11 @@ abstract class ControllerBase with Store {
   int luminosidade = 100; //980 escuro - mais iluminado tende a 0
 
   //Variaveis para se conectar ao broker
+
   String broker = '192.168.3.11';
   int port = 3000;
-  String clientIdentifier = 'flutter-mobile';
-  String topic = 'iot/casa';
+  String clientIdentifier = 'mobile';
+  String topic = 'iot/farm';
 
   late MqttServerClient client;
   late MqttConnectionState connectionState;
@@ -53,15 +55,16 @@ abstract class ControllerBase with Store {
 
   @action
   mudarEstadoLampada() {
-    String msg = '';
+    Map<String, String> msg = {'action': ''};
     estadoLampada = !estadoLampada;
 
     if (estadoLampada) {
-      msg = 'lj';
+      msg['action'] = 'lj';
     } else {
-      msg = 'dj';
+      msg['action'] = 'dj';
     }
-    enviarMensagem(msg);
+
+    enviarMensagem(jsonEncode(msg));
   }
 
   @action
@@ -89,16 +92,18 @@ abstract class ControllerBase with Store {
     Conecta no servidor MQTT à partir dos dados configurados nos atributos desta classe (broker, port, etc...)
   */
   void _connect() async {
+    String? deviceId = await _getId();
     client = MqttServerClient(broker, '');
     client.port = port;
     client.keepAlivePeriod = 30;
     client.onDisconnected = _onDisconnected;
     client.onSubscribed = subscribeToTopic;
+    client.onAutoReconnect = _onAutoReconnect;
+    client.autoReconnect = true;
 
     final MqttConnectMessage connMess = MqttConnectMessage()
-        .withClientIdentifier(clientIdentifier)
+        .withClientIdentifier('$clientIdentifier - $deviceId')
         .startClean()
-        .keepAliveFor(30)
         .withWillQos(MqttQos.atMostOnce);
     print('[MQTT client] MQTT client connecting....');
     client.connectionMessage = connMess;
@@ -136,6 +141,10 @@ abstract class ControllerBase with Store {
     });
   }
 
+  void _onAutoReconnect() {
+    print('[MQTT client] _onAutoReconnect');
+  }
+
   /*
   Desconecta do servidor MQTT
    */
@@ -150,7 +159,7 @@ abstract class ControllerBase with Store {
    */
   void _onDisconnected() {
     print('[MQTT client] _onDisconnected');
-    connectionState = client.connectionState!;
+    connectionState = MqttClientConnectionStatus().state;
     subscription.cancel();
 
     print('[MQTT client] MQTT client disconnected');
@@ -162,5 +171,18 @@ abstract class ControllerBase with Store {
   void subscribeToTopic(String topic) {
     client.subscribe(topic, MqttQos.exactlyOnce);
     print('DEBUG::Subscription confirmed for topic $topic');
+  }
+
+  //Pegando o id do celular para diferenciar na lista de client
+  Future<String?> _getId() async {
+    var deviceInfo = DeviceInfoPlugin();
+    if (Platform.isIOS) {
+      // import 'dart:io'
+      var iosDeviceInfo = await deviceInfo.iosInfo;
+      return iosDeviceInfo.identifierForVendor; // unique ID on iOS
+    } else if (Platform.isAndroid) {
+      var androidDeviceInfo = await deviceInfo.androidInfo;
+      return androidDeviceInfo.androidId; // unique ID on Android
+    }
   }
 }

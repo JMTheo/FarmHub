@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/services.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/outline_text_form.dart';
@@ -30,6 +31,7 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
+  final cpfController = TextEditingController();
   final db = FirebaseFirestore.instance;
 
   @override
@@ -93,6 +95,25 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                     ],
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  OutlineTextForm(
+                    hintTxt: 'Digite o seu cpf',
+                    iconData: Icons.person,
+                    hideText: false,
+                    txtController: cpfController,
+                    keyType: TextInputType.number,
+                    inputFormat: <TextInputFormatter>[
+                      FilteringTextInputFormatter.digitsOnly
+                    ],
+                    textInputAction: TextInputAction.next,
+                    autoValidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) =>
+                        (value == null || value.isEmpty || value.length != 11)
+                            ? null
+                            : "Por favor, coloque apenas digitos.",
                   ),
                   const SizedBox(
                     height: 20,
