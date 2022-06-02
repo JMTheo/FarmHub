@@ -110,10 +110,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                     textInputAction: TextInputAction.next,
                     autoValidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) =>
-                        (value == null || value.isEmpty || value.length != 11)
-                            ? null
-                            : "Por favor, coloque apenas digitos.",
+                    validator: (value) => (value != null && value.length != 11)
+                        ? "Por favor, coloque apenas digitos."
+                        : null,
                   ),
                   const SizedBox(
                     height: 20,
