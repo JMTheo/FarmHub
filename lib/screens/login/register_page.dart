@@ -183,6 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final user = <String, String>{
       "name": nameController.text.trim(),
       "surname": surnameController.text.trim(),
+      "cpf": cpfController.text.trim(),
       "uid_auth": uid,
     };
 

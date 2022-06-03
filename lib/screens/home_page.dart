@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
   final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,14 +12,20 @@ class HomePage extends StatelessWidget {
         title: const Text('Home'),
       ),
       body: Column(
-        children: const <Widget>[
-          Center(
-            child: Text('Olá, [nome do usuario]'),
+        children: <Widget>[
+          const Expanded(
+            child: Center(
+              child: Text('Olá, [nome do usuario]'),
+            ),
           ),
-          SizedBox(
-            height: 20.0,
-          ),
-          //TODO: Prototipar a home
+          Expanded(
+              child: ListView(
+            children: const <Widget>[
+              Text('fazenda a'),
+              Text('fazenda b'),
+              Text('fazenda c'),
+            ],
+          ))
         ],
       ),
     );

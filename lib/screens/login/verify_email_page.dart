@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:automacao_horta/screens/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -42,7 +43,14 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   }
 
   Future checkEmailVerified() async {
-    await FirebaseAuth.instance.currentUser!.reload();
+    try {
+      await FirebaseAuth.instance.currentUser!.reload();
+    } on FirebaseAuthException catch (e) {
+      ToastUtil(
+        text: 'Erro ao verificar o email: ${e.toString()}',
+        type: ToastOption.error,
+      ).getToast();
+    }
 
     setState(() {
       isEmailVerified = FirebaseAuth.instance.currentUser!.emailVerified;
@@ -69,7 +77,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   Widget build(BuildContext context) => isEmailVerified
-      ? DetailedPlantPage()
+      ? HomePage()
       : Scaffold(
           appBar: AppBar(
             title: const Text('Verifique o email'),
