@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../database/db_firestore.dart';
 
 import '../components/toast_util.dart';
 import '../enums/ToastOptions.dart';
@@ -28,11 +31,9 @@ class AuthService extends GetxController {
     });
   }
 
-  toggle() {
-    userIsAuthenticated.value = !userIsAuthenticated.value;
-  }
+  Stream<User?> get authState => _auth.authStateChanges();
+  User? get user => _auth.currentUser; //_firebaseUser.value;
 
-  User? get user => _firebaseUser.value;
   static AuthService get to => Get.find<AuthService>();
 
   showSnack(String title, String error) {
@@ -46,6 +47,7 @@ class AuthService extends GetxController {
 
   //TODO: adiciona os dados no Cloud Firestore
   Future addUser(String uid, String name, String surname, String cpf) async {
+    final FirebaseFirestore db = await DBFirestore.get();
     final user = <String, String>{
       "name": name,
       "surname": surname,
@@ -53,8 +55,8 @@ class AuthService extends GetxController {
       "uid_auth": uid,
     };
 
-    // db.collection("users").add(user).then((DocumentReference doc) =>
-    //     print('DocumentSnapshot added with ID: ${doc.id}'));
+    db.collection("users").add(user).then((DocumentReference doc) =>
+        print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   createUser(String email, String password, String name, String surname,
@@ -65,6 +67,7 @@ class AuthService extends GetxController {
           .user;
 
       if (user != null) {
+        print("user: $user");
         addUser(user.uid, name, surname, cpf);
       }
     } on FirebaseAuthException catch (e) {
@@ -164,13 +167,13 @@ class AuthService extends GetxController {
         type: ToastOption.error,
       ).getToast();
     }
-    print("checkEmailVerified: ${_auth.currentUser!.emailVerified}");
-
     getVerificationStatus();
   }
 
   getVerificationStatus() {
-    isEmailVerified.value = _auth.currentUser!.emailVerified;
+    if (_auth.currentUser != null) {
+      isEmailVerified.value = _auth.currentUser!.emailVerified;
+    }
   }
 
   logout() async {
@@ -181,5 +184,9 @@ class AuthService extends GetxController {
     } on FirebaseAuthException catch (e) {
       showSnack('Erro ao sair!', e.code);
     }
+  }
+
+  toggle() {
+    userIsAuthenticated.value = !userIsAuthenticated.value;
   }
 }

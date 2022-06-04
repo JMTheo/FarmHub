@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../services/auth_service.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +22,20 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Center(
-              child: Text('Olá, ${AuthService.to.user?.uid}'),
+              child: Text('Olá, ${AuthService.to.user?.email}'),
             ),
           ),
           Expanded(
               child: ListView(
-            children: const <Widget>[
-              Text('fazenda a'),
-              Text('fazenda b'),
-              Text('fazenda c'),
+            children: <Widget>[
+              TextButton(
+                onPressed: () {
+                  print(AuthService.to.user?.email);
+                },
+                child: const Text('Teste'),
+              ),
+              const Text('fazenda b'),
+              const Text('fazenda c'),
             ],
           ))
         ],
