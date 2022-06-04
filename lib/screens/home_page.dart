@@ -1,21 +1,28 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+
+import '../services/auth_service.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
-  final user = FirebaseAuth.instance.currentUser!;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                AuthService.to.logout();
+              },
+              icon: const Icon(Icons.person)),
+        ],
       ),
       body: Column(
         children: <Widget>[
-          const Expanded(
+          Expanded(
             child: Center(
-              child: Text('Olá, [nome do usuario]'),
+              child: Text('Olá, ${AuthService.to.user?.uid}'),
             ),
           ),
           Expanded(
@@ -30,6 +37,4 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
-
-  Future getUserData(User user) async {}
 }

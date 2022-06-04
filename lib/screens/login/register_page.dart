@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 
+import '../../services/auth_service.dart';
+
 import '../../components/custom_elevated_button.dart';
 import '../../components/outline_text_form.dart';
-import '../../components/toast_util.dart';
 
 import '../../constants.dart';
-import '../../enums/ToastOptions.dart';
 import '../../main.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({
     Key? key,
     required this.title,
-    required this.onClickedSignIn,
   }) : super(key: key);
   final String title;
-  final Function() onClickedSignIn;
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -32,7 +28,6 @@ class _RegisterPageState extends State<RegisterPage> {
   final nameController = TextEditingController();
   final surnameController = TextEditingController();
   final cpfController = TextEditingController();
-  final db = FirebaseFirestore.instance;
 
   @override
   void dispose() {
@@ -161,7 +156,9 @@ class _RegisterPageState extends State<RegisterPage> {
                     children: <Widget>[
                       const Text('Já cadastrado?'),
                       TextButton(
-                        onPressed: widget.onClickedSignIn,
+                        onPressed: () {
+                          AuthService.to.toggle();
+                        },
                         child: const Text(
                           'Entrar',
                           style: TextStyle(color: kDefaultColorGreen),
@@ -176,19 +173,6 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
-  }
-
-  //TODO: Externarm em um service, refatorar em Provider e deixar um controller abstraindo tudo
-  Future addUser(String uid) async {
-    final user = <String, String>{
-      "name": nameController.text.trim(),
-      "surname": surnameController.text.trim(),
-      "cpf": cpfController.text.trim(),
-      "uid_auth": uid,
-    };
-
-    db.collection("users").add(user).then((DocumentReference doc) =>
-        print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
   Future signUp() async {
@@ -206,41 +190,14 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
-    try {
-      final User? user = (await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(
-                  email: emailController.text.trim().toLowerCase(),
-                  password: passwordController.text.trim()))
-          .user;
+    AuthService.to.createUser(
+      emailController.text.trim().toLowerCase(),
+      passwordController.text,
+      nameController.text.trim(),
+      surnameController.text.trim(),
+      cpfController.text.trim(),
+    );
 
-      if (user != null) {
-        addUser(user.uid);
-      }
-    } on FirebaseAuthException catch (e) {
-      //weak-password
-      //email-already-in-use
-      switch (e.code) {
-        case 'weak-password':
-          ToastUtil(
-            text: 'A senha deve conter ao menos 6 caracteres',
-            type: ToastOption.error,
-          ).getToast();
-          break;
-        case 'email-already-in-use':
-          ToastUtil(
-            text: 'Email já está cadastrado',
-            type: ToastOption.error,
-          ).getToast();
-          break;
-        default:
-          ToastUtil(
-            type: ToastOption.error,
-            text: 'Erro inesperado, contate o adiministrador do aplicativo',
-          ).getToast();
-          print('Erro ao realizar login: ${e.code}');
-          break;
-      }
-    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
     });

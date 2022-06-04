@@ -1,6 +1,10 @@
-import 'package:automacao_horta/screens/login/login_page.dart';
-import 'package:automacao_horta/screens/login/register_page.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
+
+import '../../services/auth_service.dart';
+
+import './login_page.dart';
+import './register_page.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -8,11 +12,9 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
-  bool isLogin = true;
   @override
-  Widget build(BuildContext context) => isLogin
-      ? LoginPage(title: 'login', onClickedSignUp: toggle)
-      : RegisterPage(title: 'Registro', onClickedSignIn: toggle);
-
-  void toggle() => setState(() => isLogin = !isLogin);
+  Widget build(BuildContext context) =>
+      Obx(() => AuthService.to.userIsAuthenticated.value
+          ? const RegisterPage(title: 'Registro')
+          : const LoginPage(title: 'login'));
 }

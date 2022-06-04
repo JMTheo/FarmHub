@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/outline_text_form.dart';
-import '../../components/toast_util.dart';
 
-import '../../enums/ToastOptions.dart';
-
-import 'auth_page.dart';
+import '../../services/auth_service.dart';
 
 import '../../constants.dart';
 import '../../main.dart';
+
+import 'auth_page.dart';
 
 class ForgotPassWordPage extends StatefulWidget {
   ForgotPassWordPage({Key? key}) : super(key: key);
@@ -107,23 +105,11 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
       ),
     );
 
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(
-          email: emailController.text.trim().toLowerCase());
-      ToastUtil(
-        text: 'Email para resetar a senha enviado!',
-        type: ToastOption.success,
-      ).getToast();
+    await AuthService.to
+        .forgotPassword(emailController.text.trim().toLowerCase());
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        navigatorKey.currentState!.popUntil((route) => route.isFirst);
-      });
-    } on FirebaseAuthException catch (e) {
-      ToastUtil(
-        text: 'Erro ao resertar a senha: ${e.message}',
-        type: ToastOption.success,
-      ).getToast();
-      Navigator.of(context).pop();
-    }
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      navigatorKey.currentState!.popUntil((route) => route.isFirst);
+    });
   }
 }

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:email_validator/email_validator.dart';
 
-import '../../enums/ToastOptions.dart';
+import '../../services/auth_service.dart';
 
-import '../../components/toast_util.dart';
 import '../../components/custom_elevated_button.dart';
 import '../../components/outline_text_form.dart';
 
@@ -17,10 +15,8 @@ class LoginPage extends StatefulWidget {
   const LoginPage({
     Key? key,
     required this.title,
-    required this.onClickedSignUp,
   }) : super(key: key);
   final String title;
-  final VoidCallback onClickedSignUp;
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -114,7 +110,9 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       const Text('Ainda não cadastrado?'),
                       TextButton(
-                        onPressed: widget.onClickedSignUp,
+                        onPressed: () {
+                          AuthService.to.toggle();
+                        },
                         child: const Text('Criar uma conta',
                             style: TextStyle(color: kDefaultColorGreen)),
                       ),
@@ -139,39 +137,8 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
 
-    try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim().toLowerCase(),
-        password: passwordController.text.trim(),
-      );
-      ToastUtil(type: ToastOption.success, text: 'Sucesso ao logar!');
-    } on FirebaseAuthException catch (e) {
-      //Tratamento de erro
-      switch (e.code) {
-        case 'too-many-requests':
-          ToastUtil(
-            text:
-                'Muitas tentativas para realizar o login, aguarde um monento!',
-            type: ToastOption.error,
-          ).getToast();
-          break;
-        case 'user-not-found':
-        case 'wrong-password':
-          ToastUtil(
-            text: 'Email ou senha incorretos!',
-            type: ToastOption.error,
-          ).getToast();
-          break;
-        default:
-          ToastUtil(
-            type: ToastOption.error,
-            text: 'Erro inesperado, contate o adiministrador do aplicativo',
-          ).getToast();
-          print('Erro ao realizar login: ${e.code}');
-          break;
-      }
-    }
-    //navigatorKey.currentState!.popUntil((route) => true);
+    AuthService.to.login(emailController.text.trim().toLowerCase(),
+        passwordController.text.trim());
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       navigatorKey.currentState!.popUntil((route) => route.isFirst);
