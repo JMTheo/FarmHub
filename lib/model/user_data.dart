@@ -14,7 +14,7 @@ class UserData {
   });
 
   Map<String, dynamic> toJson() => {
-        'uidAuth': uidAuth,
+        'uid_auth': uidAuth,
         'name': name,
         'surname': surname,
         'cpf': cpf,
