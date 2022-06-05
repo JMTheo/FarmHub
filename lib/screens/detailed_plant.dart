@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -22,13 +21,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
         title: const Center(
           child: Text('Automação da horta'),
         ),
-        actions: <Widget>[
-          IconButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              icon: const Icon(Icons.person)),
-        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

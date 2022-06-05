@@ -5,6 +5,11 @@ const TextStyle kTitle = TextStyle(
   fontSize: 40.0,
 );
 
+const TextStyle kTitleMedium = TextStyle(
+  fontWeight: FontWeight.bold,
+  fontSize: 25.0,
+);
+
 const TextStyle kSubTitle = TextStyle(
   fontWeight: FontWeight.w200,
   color: Colors.white,

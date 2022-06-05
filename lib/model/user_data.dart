@@ -4,8 +4,6 @@ class UserData {
   final String surname;
   final String cpf;
   final String? email;
-  final List<dynamic>? owner;
-  final List<dynamic>? canAccess;
 
   UserData({
     this.uidAuth = '',
@@ -13,8 +11,6 @@ class UserData {
     required this.surname,
     required this.cpf,
     this.email,
-    this.owner,
-    this.canAccess,
   });
 
   Map<String, dynamic> toJson() => {
@@ -22,8 +18,7 @@ class UserData {
         'name': name,
         'surname': surname,
         'cpf': cpf,
-        'owner': owner,
-        'canAccess': canAccess,
+        'email': email,
       };
 
   static UserData fromJson(Map<String, dynamic> json) => UserData(
@@ -31,7 +26,5 @@ class UserData {
         cpf: json['cpf'],
         name: json['name'],
         surname: json['surname'],
-        owner: json['owner'],
-        canAccess: json['canAccess'],
       );
 }

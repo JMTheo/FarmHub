@@ -85,7 +85,6 @@ class AuthService extends GetxController {
           email: email, //Controller.text.trim().toLowerCase(),
           password: password //Controller.text.trim(),
           );
-      DBController.to.getUserData(user!.uid);
       ToastUtil(type: ToastOption.success, text: 'Sucesso ao logar!');
     } on FirebaseAuthException catch (e) {
       //Tratamento de erro

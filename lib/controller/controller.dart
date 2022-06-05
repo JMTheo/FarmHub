@@ -112,7 +112,7 @@ abstract class ControllerBase with Store {
       await client.connect();
     } catch (e) {
       print(e);
-      _disconnect();
+      disconnect();
     }
 
     /// Checando conexao
@@ -148,7 +148,7 @@ abstract class ControllerBase with Store {
   /*
   Desconecta do servidor MQTT
    */
-  void _disconnect() {
+  void disconnect() {
     print('[MQTT client] _disconnect()');
     client.disconnect();
     _onDisconnected();
@@ -184,5 +184,6 @@ abstract class ControllerBase with Store {
       var androidDeviceInfo = await deviceInfo.androidInfo;
       return androidDeviceInfo.androidId; // unique ID on Android
     }
+    return null;
   }
 }
