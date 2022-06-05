@@ -67,8 +67,10 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () async {
                       final String name = _nameController.text;
                       final String users = _userController.text;
-                      final Farm farm = Farm(id: documentSnapshot, name: name);
-                      DBController.to.updateFarm(documentSnapshot!, farm);
+                      final Farm farm =
+                          Farm(id: documentSnapshot!.id, name: name);
+                      print('usuários: $users');
+                      DBController.to.updateFarm(farm);
                       _nameController.text = '';
                       _userController.text = '';
                       Navigator.of(context).pop();
@@ -105,6 +107,9 @@ class _HomePageState extends State<HomePage> {
             style: kTitleMedium,
           )),
           Expanded(
+              child: Obx(() => Text(
+                  '[DEBUG]email: ${DBController.to.userData.value.email}'))),
+          Expanded(
             flex: 3,
             child: StreamBuilder<QuerySnapshot>(
                 stream: DBController.to.getFarms(AuthService.to.user!.uid),
@@ -118,11 +123,12 @@ class _HomePageState extends State<HomePage> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  final data = snapshot.requireData;
+
                   return ListView.builder(
-                      itemCount: data.size,
+                      itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        final DocumentSnapshot docSnap = data.docs[index];
+                        final DocumentSnapshot docSnap =
+                            snapshot.data!.docs[index];
                         return Card(
                           margin: const EdgeInsets.all(10.0),
                           child: ListTile(

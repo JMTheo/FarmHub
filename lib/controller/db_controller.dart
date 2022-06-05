@@ -10,7 +10,8 @@ import '../model/farm.dart';
 import '../model/ground.dart';
 
 class DBController extends GetxController {
-  Rx<UserData> userData = UserData(name: '', surname: '', cpf: '').obs;
+  Rx<UserData> userData =
+      UserData(name: '', surname: '', cpf: '', email: '').obs;
 
   final FirebaseFirestore _db = DBFirestore.get();
 
@@ -65,8 +66,8 @@ class DBController extends GetxController {
         print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
-  Future updateFarm(DocumentSnapshot doc, Farm farmObj) async {
+  Future updateFarm(Farm farmObj) async {
     final json = farmObj.toJson();
-    _db.collection('farms').doc(doc.id).update(json);
+    await _db.collection('farm').doc(farmObj.id).update(json);
   }
 }

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Farm {
-  DocumentSnapshot? id;
+  String? id;
   final String name;
   final DocumentReference? owner;
   final String? canAccess;
@@ -14,10 +14,10 @@ class Farm {
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'name': name,
-        'owner': owner,
-        'canAccess': canAccess,
+        if (id != null) 'id': id,
+        if (owner != null) 'owner': owner,
+        if (canAccess != null) 'canAccess': canAccess,
       };
 
   static Farm fromJson(Map<String, dynamic> json) => Farm(

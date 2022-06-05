@@ -26,5 +26,6 @@ class UserData {
         cpf: json['cpf'],
         name: json['name'],
         surname: json['surname'],
+        email: json['email'],
       );
 }
