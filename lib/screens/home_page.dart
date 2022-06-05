@@ -26,18 +26,20 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Expanded(
-              child: ListView(
-            children: <Widget>[
-              TextButton(
-                onPressed: () {
-                  print(AuthService.to.user?.email);
-                },
-                child: const Text('Teste'),
-              ),
-              const Text('fazenda b'),
-              const Text('fazenda c'),
-            ],
-          ))
+            child: ListView(
+              children: <Widget>[
+                const Text('fazenda a'),
+                const Text('fazenda b'),
+                const Text('fazenda c'),
+                TextButton(
+                  onPressed: () {
+                    //DBController().getUserData(AuthService.to.user?.uid);
+                  },
+                  child: const Text('Teste'),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

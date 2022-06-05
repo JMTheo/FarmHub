@@ -7,6 +7,7 @@ import '../database/db_firestore.dart';
 
 import '../components/toast_util.dart';
 import '../enums/ToastOptions.dart';
+import '../model/user_data.dart';
 
 class AuthService extends GetxController {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -46,29 +47,23 @@ class AuthService extends GetxController {
   }
 
   //TODO: adiciona os dados no Cloud Firestore
-  Future addUser(String uid, String name, String surname, String cpf) async {
+  Future addUser(UserData userObj) async {
     final FirebaseFirestore db = await DBFirestore.get();
-    final user = <String, String>{
-      "name": name,
-      "surname": surname,
-      "cpf": cpf,
-      "uid_auth": uid,
-    };
+    final json = userObj.toJson();
 
-    db.collection("users").add(user).then((DocumentReference doc) =>
+    db.collection("users").add(json).then((DocumentReference doc) =>
         print('DocumentSnapshot added with ID: ${doc.id}'));
   }
 
-  createUser(String email, String password, String name, String surname,
-      String cpf) async {
+  createUser(UserData userObj, String password) async {
     try {
       final User? user = (await _auth.createUserWithEmailAndPassword(
-              email: email, password: password))
+              email: userObj.email!, password: password))
           .user;
 
       if (user != null) {
-        print("user: $user");
-        addUser(user.uid, name, surname, cpf);
+        userObj.uidAuth = user.uid;
+        addUser(userObj);
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

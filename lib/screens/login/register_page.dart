@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
 
+import '../../model/user_data.dart';
 import '../../services/auth_service.dart';
 
 import '../../components/custom_elevated_button.dart';
@@ -190,12 +191,16 @@ class _RegisterPageState extends State<RegisterPage> {
       ),
     );
 
+    final UserData user = UserData(
+      name: nameController.text.trim(),
+      surname: surnameController.text.trim(),
+      cpf: cpfController.text.trim(),
+      email: emailController.text.trim().toLowerCase(),
+    );
+
     AuthService.to.createUser(
-      emailController.text.trim().toLowerCase(),
+      user,
       passwordController.text,
-      nameController.text.trim(),
-      surnameController.text.trim(),
-      cpfController.text.trim(),
     );
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
