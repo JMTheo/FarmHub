@@ -124,6 +124,11 @@ class _HomePageState extends State<HomePage> {
                     );
                   }
 
+                  if (snapshot.data!.docs.isEmpty) {
+                    return const Text(
+                        'Não há fazendas cadastradas ao seu perfil');
+                  }
+
                   return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
