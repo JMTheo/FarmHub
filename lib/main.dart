@@ -1,6 +1,8 @@
-import 'package:automacao_horta/config.dart';
 import 'package:flutter/material.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:get/get_navigation/src/root/get_material_app.dart';
+
+import '../config.dart';
 
 import '/screens/main_page.dart';
 
@@ -18,7 +20,7 @@ class MyApp extends StatelessWidget {
   // TODO: Acrescentar a fonte bariol
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       title: 'FarmHub',
       navigatorKey: navigatorKey,
       builder: BotToastInit(), //1. call BotToastInit
@@ -32,7 +34,7 @@ class MyApp extends StatelessWidget {
         hintColor: Colors.white,
         scaffoldBackgroundColor: kScaffoldBGColor,
       ),
-      home: MainPage(),
+      home: const MainPage(),
     );
   }
 }

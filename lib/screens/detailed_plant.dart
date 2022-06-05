@@ -15,8 +15,6 @@ class DetailedPlantPage extends StatefulWidget {
 }
 
 class _DetailedPlantPageState extends State<DetailedPlantPage> {
-  final user = FirebaseAuth.instance.currentUser!;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

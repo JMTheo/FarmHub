@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../database/db_firestore.dart';
+import '../controller/db_controller.dart';
 
 import '../components/toast_util.dart';
 import '../enums/ToastOptions.dart';
@@ -46,15 +45,6 @@ class AuthService extends GetxController {
     );
   }
 
-  //TODO: adiciona os dados no Cloud Firestore
-  Future addUser(UserData userObj) async {
-    final FirebaseFirestore db = await DBFirestore.get();
-    final json = userObj.toJson();
-
-    db.collection("users").add(json).then((DocumentReference doc) =>
-        print('DocumentSnapshot added with ID: ${doc.id}'));
-  }
-
   createUser(UserData userObj, String password) async {
     try {
       final User? user = (await _auth.createUserWithEmailAndPassword(
@@ -63,7 +53,7 @@ class AuthService extends GetxController {
 
       if (user != null) {
         userObj.uidAuth = user.uid;
-        addUser(userObj);
+        DBController.to.addUser(userObj);
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
@@ -95,6 +85,7 @@ class AuthService extends GetxController {
           email: email, //Controller.text.trim().toLowerCase(),
           password: password //Controller.text.trim(),
           );
+      DBController.to.getUserData(user!.uid);
       ToastUtil(type: ToastOption.success, text: 'Sucesso ao logar!');
     } on FirebaseAuthException catch (e) {
       //Tratamento de erro

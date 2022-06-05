@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../controller/db_controller.dart';
 import '../services/auth_service.dart';
+
+import 'detailed_plant.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +26,8 @@ class HomePage extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: Center(
-              child: Text('Olá, ${AuthService.to.user?.email}'),
+              child: Obx(() => Text(
+                  'Olá, ${DBController.to.userData.value.name.toString()} ${DBController.to.userData.value.surname.toString()}')),
             ),
           ),
           Expanded(
@@ -33,9 +38,9 @@ class HomePage extends StatelessWidget {
                 const Text('fazenda c'),
                 TextButton(
                   onPressed: () {
-                    //DBController().getUserData(AuthService.to.user?.uid);
+                    Get.to(DetailedPlantPage());
                   },
-                  child: const Text('Teste'),
+                  child: const Text('Ir para fazenda x'),
                 ),
               ],
             ),

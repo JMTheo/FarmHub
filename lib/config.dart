@@ -1,10 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'firebase_options.dart';
 
-import 'package:automacao_horta/services/auth_service.dart';
+import './services/auth_service.dart';
+import './controller/db_controller.dart';
 
 initConfig() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,4 +15,5 @@ initConfig() async {
 
   //GetX Binding
   Get.lazyPut<AuthService>(() => AuthService());
+  Get.lazyPut<DBController>(() => DBController());
 }
