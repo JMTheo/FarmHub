@@ -65,9 +65,10 @@ getModal(context, FarmTypeOperation type,
                       fullName:
                           '${DBController.to.userData.value.name} ${DBController.to.userData.value.surname}');
 
-                  if (documentSnapshot!.id.isNotEmpty) {
+                  if (documentSnapshot != null) {
                     farm.id = documentSnapshot.id;
                   }
+
                   if (type == FarmTypeOperation.create) {
                     DBController.to.addFarm(farm);
                   } else {
