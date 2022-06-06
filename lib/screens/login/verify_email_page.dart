@@ -5,6 +5,8 @@ import 'package:automacao_horta/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../controller/db_controller.dart';
+
 class VerifyEmailPage extends StatefulWidget {
   const VerifyEmailPage({Key? key}) : super(key: key);
 
@@ -18,6 +20,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   void initState() {
     super.initState();
+    DBController.to.getUserData(AuthService.to.user!.uid);
 
     AuthService.to.getVerificationStatus();
 
@@ -40,7 +43,10 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
   @override
   Widget build(BuildContext context) => Obx(
         () => AuthService.to.isEmailVerified.value
-            ? HomePage()
+            ? HomePage(
+                stream: DBController.to
+                    .getFarms(DBController.to.userData.value.email!),
+              )
             : Scaffold(
                 appBar: AppBar(
                   title: const Text('Verifique o email'),
