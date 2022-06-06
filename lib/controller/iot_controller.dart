@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
@@ -8,33 +9,23 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:mqtt_client/mqtt_client.dart'; // as mqtt;
 import 'package:mqtt_client/mqtt_server_client.dart';
 
-import 'package:mobx/mobx.dart';
-part 'controller.g.dart';
+class IoTController extends GetxController {
+  RxDouble temperatura = 28.0.obs;
+  RxBool estadoLampada = false.obs;
+  RxInt umidadeSolo = 80.obs;
+  RxInt umidadeAr = 99.obs;
+  RxInt luminosidade = 100.obs; //980 escuro - mais iluminado tende a 0
 
-//A cada alteração no Observable rodar esse comando no terminal
-// flutter pub run build_runner watch
+  //GetX
+  static IoTController get to => Get.find<IoTController>();
 
-class Controller = ControllerBase with _$Controller;
-
-abstract class ControllerBase with Store {
-  ControllerBase() {
+  @override
+  void init() {
+    super.onInit();
     _connect();
   }
 
-  //tipo da variavel |Nome Var   | Valor a ser iniciado
-  @observable
-  double temperatura = 28;
-  @observable
-  bool estadoLampada = false;
-  @observable
-  int umidadeSolo = 80;
-  @observable
-  int umidadeAr = 99;
-  @observable
-  int luminosidade = 100; //980 escuro - mais iluminado tende a 0
-
   //Variaveis para se conectar ao broker
-
   String broker = '192.168.3.11';
   int port = 3000;
   String clientIdentifier = 'mobile';
@@ -45,20 +36,18 @@ abstract class ControllerBase with Store {
   late StreamSubscription subscription;
 
   //Função a ser executada
-  @action
   atualizarDados(int umi, int umiS, double temp, int luz) {
-    umidadeAr = umi;
-    umidadeSolo = umiS;
-    temperatura = temp;
-    luminosidade = luz;
+    umidadeAr.value = umi;
+    umidadeSolo.value = umiS;
+    temperatura.value = temp;
+    luminosidade.value = luz;
   }
 
-  @action
   mudarEstadoLampada() {
     Map<String, String> msg = {'action': ''};
-    estadoLampada = !estadoLampada;
+    estadoLampada.value = !estadoLampada.value;
 
-    if (estadoLampada) {
+    if (estadoLampada.value) {
       msg['action'] = 'lj';
     } else {
       msg['action'] = 'dj';
@@ -67,7 +56,6 @@ abstract class ControllerBase with Store {
     enviarMensagem(jsonEncode(msg));
   }
 
-  @action
   acionarAgua() {
     BotToast.showLoading(
         duration: const Duration(seconds: 1),
@@ -92,7 +80,7 @@ abstract class ControllerBase with Store {
     Conecta no servidor MQTT à partir dos dados configurados nos atributos desta classe (broker, port, etc...)
   */
   void _connect() async {
-    String? deviceId = await _getId();
+    String? deviceId = await _getIdDevice();
     client = MqttServerClient(broker, '');
     client.port = port;
     client.keepAlivePeriod = 30;
@@ -174,7 +162,7 @@ abstract class ControllerBase with Store {
   }
 
   //Pegando o id do celular para diferenciar na lista de client
-  Future<String?> _getId() async {
+  Future<String?> _getIdDevice() async {
     var deviceInfo = DeviceInfoPlugin();
     if (Platform.isIOS) {
       // import 'dart:io'

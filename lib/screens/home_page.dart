@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
               child: TextButton(
                 onPressed: () {
                   //TODO: Remover debug
-                  Get.to(() => DetailedPlantPage(
+                  Get.to(() => const DetailedPlantPage(
                         farmID: 'sxB9BWdrjuaa9uJ3Zb9w',
                       ));
                 },

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class BottomCard extends StatelessWidget {
-  const BottomCard({required this.titulo, required this.valor});
+  const BottomCard({Key? key, required this.titulo, required this.valor})
+      : super(key: key);
 
   final String valor;
   final String titulo;
