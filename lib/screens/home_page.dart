@@ -1,3 +1,4 @@
+import 'package:automacao_horta/screens/login/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +31,8 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  AuthService.to.logout();
+                  //AuthService.to.logout();
+                  Get.to(() => const ProfilePage());
                 },
                 icon: const Icon(Icons.person)),
           ],
@@ -121,6 +123,7 @@ class _HomePageState extends State<HomePage> {
               child: TextButton(
                 onPressed: () {
                   //TODO: Remover debug
+                  // DBController.to.getUserData2(AuthService.to.user!.uid);
                   Get.to(() => const DetailedPlantPage(
                         farmID: 'sxB9BWdrjuaa9uJ3Zb9w',
                       ));
