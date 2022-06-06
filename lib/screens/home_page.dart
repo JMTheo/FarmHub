@@ -120,7 +120,11 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () async {
                       final String name = _nameController.text;
                       final String users = _userController.text;
-                      final List<String> usersList = users.split(',');
+                      List<String> usersList = users.split(',');
+                      usersList.addIf(
+                          usersList
+                              .contains(DBController.to.userData.value.email!),
+                          DBController.to.userData.value.email!);
                       print('usersTest: $users');
                       final Farm farm = Farm(
                           name: name,

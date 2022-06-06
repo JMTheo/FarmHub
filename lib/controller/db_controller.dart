@@ -37,7 +37,7 @@ class DBController extends GetxController {
     await getAllOwnerFarms(farmObj.owner!);
   }
 
-  getUserData(uid) {
+  getUserData(uid) async {
     final userRef = _db.collection('users');
     var query =
         userRef.where('uid_auth', isEqualTo: uid).snapshots().listen((event) {
@@ -88,7 +88,7 @@ class DBController extends GetxController {
   Future getOwnerData(String email) async {
     await _db
         .collection('users')
-        .where('uid_auth', isEqualTo: email)
+        .where('email', isEqualTo: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
               UserData userObj = UserData.fromJson(document.data());
@@ -102,6 +102,7 @@ class DBController extends GetxController {
         .where("owner", isEqualTo: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
+              print('getAllOwnerFarms: ${document.reference.id}');
               ownerFarmsIDs.addIf(
                   !ownerFarmsIDs.contains(document.reference.id),
                   document.reference.id);
