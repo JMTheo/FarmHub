@@ -1,11 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class Farm {
   String? id;
   final String name;
   final String? fullName;
-  final DocumentReference? owner;
-  final String? canAccess;
+  final String? owner;
+  final List<String>? canAccess;
 
   Farm({
     this.id,

@@ -27,8 +27,14 @@ class DBController extends GetxController {
   Future addUser(UserData userObj) async {
     final json = userObj.toJson();
 
-    _db.collection("users").add(json).then((DocumentReference doc) =>
+    await _db.collection("users").add(json).then((DocumentReference doc) =>
         print('DocumentSnapshot added with ID: ${doc.id}'));
+  }
+
+  Future addFarm(Farm farmObj) async {
+    final json = farmObj.toJson();
+    await _db.collection('farm').add(json);
+    await getAllOwnerFarms(farmObj.owner);
   }
 
   getUserData(uid) {
