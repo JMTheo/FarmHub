@@ -208,13 +208,18 @@ class _HomePageState extends State<HomePage> {
                                   trailing: DBController.to.ownerFarmsIDs
                                           .contains(docSnap.id)
                                       ? SizedBox(
-                                          width: 50.0,
+                                          width: 100.0,
                                           child: Row(children: <Widget>[
                                             IconButton(
-                                                onPressed: () {
-                                                  _update(docSnap);
-                                                },
-                                                icon: const Icon(Icons.edit)),
+                                              onPressed: () {
+                                                _update(docSnap);
+                                              },
+                                              icon: const Icon(Icons.edit),
+                                            ),
+                                            IconButton(
+                                                icon: const Icon(Icons.delete),
+                                                onPressed: () => DBController.to
+                                                    .deleteFarm(docSnap.id)),
                                           ]),
                                         )
                                       : const SizedBox.shrink(),
