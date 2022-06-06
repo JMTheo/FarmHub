@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import '../constants.dart';
 import '../controller/db_controller.dart';
 
-import '../model/farm.dart';
+import '../enums/FarmTypeOperation.dart';
+import '../modal/farm_modal.dart';
 import '../services/auth_service.dart';
 
 import '../components/avatar_card.dart';
@@ -19,132 +20,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _userController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    //String userAccessToTxt() {}
-
-    Future<void> _update([DocumentSnapshot? documentSnapshot]) async {
-      if (documentSnapshot != null) {
-        _nameController.text = documentSnapshot['name'];
-        _userController.text = documentSnapshot['canAccess'].join(',');
-      }
-
-      await showModalBottomSheet(
-          isScrollControlled: true,
-          context: context,
-          builder: (BuildContext ctx) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    controller: _nameController,
-                    decoration:
-                        const InputDecoration(labelText: 'Nome da fazenda'),
-                  ),
-                  TextField(
-                    controller: _userController,
-                    decoration: const InputDecoration(
-                      labelText: 'Quem pode acessar',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    child: const Text('Atualizar'),
-                    onPressed: () async {
-                      final String name = _nameController.text;
-                      final String users = _userController.text;
-                      final List<String> usersList = users.split(',');
-                      final Farm farm = Farm(
-                          id: documentSnapshot!.id,
-                          name: name,
-                          canAccess: usersList);
-                      print('usersTest: ${_userController.text}');
-                      DBController.to.updateFarm(farm);
-                      _nameController.text = '';
-                      _userController.text = '';
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
-            );
-          });
-    }
-
-    Future<void> _create() async {
-      await showModalBottomSheet(
-          isScrollControlled: true,
-          context: context,
-          builder: (BuildContext ctx) {
-            return Padding(
-              padding: EdgeInsets.only(
-                  top: 20,
-                  left: 20,
-                  right: 20,
-                  bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  TextField(
-                    controller: _nameController,
-                    decoration:
-                        const InputDecoration(labelText: 'Nome da fazenda'),
-                  ),
-                  TextField(
-                    keyboardType: TextInputType.multiline,
-                    minLines: 1,
-                    maxLines: 25,
-                    controller: _userController,
-                    decoration: const InputDecoration(
-                      labelText: 'Usuários',
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    child: const Text('Criar fazenda'),
-                    onPressed: () async {
-                      final String name = _nameController.text;
-                      final String users = _userController.text;
-                      List<String> usersList = users.split(',');
-                      usersList.addIf(
-                          usersList
-                              .contains(DBController.to.userData.value.email!),
-                          DBController.to.userData.value.email!);
-                      print('usersTest: $users');
-                      final Farm farm = Farm(
-                          name: name,
-                          canAccess: usersList,
-                          owner: AuthService.to.user!.uid,
-                          fullName:
-                              '${DBController.to.userData.value.name} ${DBController.to.userData.value.surname}');
-                      DBController.to.addFarm(farm);
-
-                      _nameController.text = '';
-                      _userController.text = '';
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-              ),
-            );
-          });
-    }
-
     DBController.to.getUserData(AuthService.to.user!.uid);
     DBController.to.getAllOwnerFarms(DBController.to.userData.value.email!);
     return Scaffold(
@@ -211,8 +88,11 @@ class _HomePageState extends State<HomePage> {
                                           width: 100.0,
                                           child: Row(children: <Widget>[
                                             IconButton(
-                                              onPressed: () {
-                                                _update(docSnap);
+                                              onPressed: () async {
+                                                await getModal(
+                                                    context,
+                                                    FarmTypeOperation.update,
+                                                    docSnap);
                                               },
                                               icon: const Icon(Icons.edit),
                                             ),
@@ -239,7 +119,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => _create(),
+          onPressed: () async =>
+              await getModal(context, FarmTypeOperation.create),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);
