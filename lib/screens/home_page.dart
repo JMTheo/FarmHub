@@ -83,6 +83,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     DBController.to.getUserData(AuthService.to.user!.uid);
+    DBController.to.getAllOwnerFarms(AuthService.to.user!.uid);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -102,13 +103,13 @@ class _HomePageState extends State<HomePage> {
             ),
           ),
           const Expanded(
-              child: Text(
-            'Fazendas disponíveis',
-            style: kTitleMedium,
+              child: Padding(
+            padding: EdgeInsets.only(top: 40.0),
+            child: Text(
+              'Fazendas disponíveis',
+              style: kTitleMedium,
+            ),
           )),
-          Expanded(
-              child: Obx(() => Text(
-                  '[DEBUG]email: ${DBController.to.userData.value.email}'))),
           Expanded(
             flex: 3,
             child: StreamBuilder<QuerySnapshot>(
@@ -134,23 +135,26 @@ class _HomePageState extends State<HomePage> {
                       itemBuilder: (context, index) {
                         final DocumentSnapshot docSnap =
                             snapshot.data!.docs[index];
-                        return Card(
-                          margin: const EdgeInsets.all(10.0),
-                          child: ListTile(
-                            title: Text(docSnap['name']),
-                            subtitle: Text(docSnap['owner']),
-                            trailing: SizedBox(
-                              width: 50.0,
-                              child: Row(children: <Widget>[
-                                IconButton(
-                                    onPressed: () {
-                                      _update(docSnap);
-                                    },
-                                    icon: const Icon(Icons.edit)),
-                              ]),
-                            ),
-                          ),
-                        );
+                        return Obx(() => Card(
+                              margin: const EdgeInsets.all(10.0),
+                              child: ListTile(
+                                title: Text(docSnap['name']),
+                                subtitle: Text('Dono: ${docSnap['fullName']}'),
+                                trailing: DBController.to.ownerFarmsIDs
+                                        .contains(docSnap.id)
+                                    ? SizedBox(
+                                        width: 50.0,
+                                        child: Row(children: <Widget>[
+                                          IconButton(
+                                              onPressed: () {
+                                                _update(docSnap);
+                                              },
+                                              icon: const Icon(Icons.edit)),
+                                        ]),
+                                      )
+                                    : const SizedBox.shrink(),
+                              ),
+                            ));
                       });
                 }),
           ),

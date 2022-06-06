@@ -163,9 +163,10 @@ class AuthService extends GetxController {
 
   logout() async {
     try {
-      await _auth.signOut();
       userIsAuthenticated.value = false;
       isEmailVerified.value = false;
+      DBController.to.eraseDataOnLogout();
+      await _auth.signOut();
     } on FirebaseAuthException catch (e) {
       showSnack('Erro ao sair!', e.code);
     }
