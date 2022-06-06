@@ -1,3 +1,4 @@
+import 'package:automacao_horta/screens/login/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,14 +8,14 @@ import '../controller/db_controller.dart';
 
 import '../enums/FarmTypeOperation.dart';
 import '../modal/farm_modal.dart';
-import '../services/auth_service.dart';
 
 import '../components/avatar_card.dart';
 import '../screens/detailed_plant.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({Key? key, required this.stream}) : super(key: key);
 
+  final Stream<QuerySnapshot<Object?>> stream;
   @override
   State<HomePage> createState() => _HomePageState();
 }
@@ -22,7 +23,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    DBController.to.getUserData(AuthService.to.user!.uid);
     DBController.to.getAllOwnerFarms(DBController.to.userData.value.email!);
     return Scaffold(
         appBar: AppBar(
@@ -30,7 +30,8 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  AuthService.to.logout();
+                  //AuthService.to.logout();
+                  Get.to(() => const ProfilePage());
                 },
                 icon: const Icon(Icons.person)),
           ],
@@ -53,8 +54,7 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               flex: 3,
               child: StreamBuilder<QuerySnapshot>(
-                  stream: DBController.to
-                      .getFarms(DBController.to.userData.value.email!),
+                  stream: widget.stream,
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {
@@ -121,6 +121,7 @@ class _HomePageState extends State<HomePage> {
               child: TextButton(
                 onPressed: () {
                   //TODO: Remover debug
+                  // DBController.to.getUserData2(AuthService.to.user!.uid);
                   Get.to(() => const DetailedPlantPage(
                         farmID: 'sxB9BWdrjuaa9uJ3Zb9w',
                       ));

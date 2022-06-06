@@ -16,5 +16,5 @@ class _AuthPageState extends State<AuthPage> {
   Widget build(BuildContext context) =>
       Obx(() => AuthService.to.userIsAuthenticated.value
           ? const RegisterPage(title: 'Registro')
-          : const LoginPage(title: 'login'));
+          : const LoginPage());
 }

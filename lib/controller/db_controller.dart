@@ -41,27 +41,21 @@ class DBController extends GetxController {
     await getAllOwnerFarms(farmObj.owner!);
   }
 
-  getUserData(uid) async {
-    final userRef = _db.collection('users');
-    var query =
-        userRef.where('uid_auth', isEqualTo: uid).snapshots().listen((event) {
-      for (var change in event.docChanges) {
-        switch (change.type) {
-          case DocumentChangeType.added:
-            setUserDataLocal(change.doc.data());
-            print('Doc inserido: ${change.doc.data()}');
-            break;
-          case DocumentChangeType.modified:
-            print('Doc Modificado: ${change.doc.data()}');
-            setUserDataLocal(change.doc.data());
-            break;
-          case DocumentChangeType.removed:
-            print('Doc removido: ${change.doc.data()}');
-            break;
-        }
-      }
-    });
-    return query;
+  Future getUserData(String uid) async {
+    await _db
+        .collection('users')
+        .where('uid_auth', isEqualTo: uid)
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              UserData user = UserData(
+                  name: document['name'],
+                  surname: document['surname'],
+                  cpf: document['cpf'],
+                  email: document['email'],
+                  uidAuth: uid);
+              userData.value = user;
+              print('user ${userData.value.email}');
+            }));
   }
 
   Stream<QuerySnapshot> getFarms(String email) {
