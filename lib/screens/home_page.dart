@@ -76,33 +76,42 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final DocumentSnapshot docSnap =
                               snapshot.data!.docs[index];
-                          return Obx(() => Card(
-                                margin: const EdgeInsets.all(10.0),
-                                child: ListTile(
-                                  title: Text(docSnap['name']),
-                                  subtitle:
-                                      Text('Dono: ${docSnap['fullName']}'),
-                                  trailing: DBController.to.ownerFarmsIDs
-                                          .contains(docSnap.id)
-                                      ? SizedBox(
-                                          width: 100.0,
-                                          child: Row(children: <Widget>[
-                                            IconButton(
-                                              onPressed: () async {
-                                                await getModal(
-                                                    context,
-                                                    FarmTypeOperation.update,
-                                                    docSnap);
-                                              },
-                                              icon: const Icon(Icons.edit),
-                                            ),
-                                            IconButton(
-                                                icon: const Icon(Icons.delete),
-                                                onPressed: () => DBController.to
-                                                    .deleteFarm(docSnap.id)),
-                                          ]),
-                                        )
-                                      : const SizedBox.shrink(),
+                          return Obx(() => GestureDetector(
+                                onTap: () => {
+                                  Get.to(() => DetailedPlantPage(
+                                        farmID: docSnap.id,
+                                      ))
+                                },
+                                child: Card(
+                                  margin: const EdgeInsets.all(10.0),
+                                  child: ListTile(
+                                    title: Text(docSnap['name']),
+                                    subtitle:
+                                        Text('Dono: ${docSnap['fullName']}'),
+                                    trailing: DBController.to.ownerFarmsIDs
+                                            .contains(docSnap.id)
+                                        ? SizedBox(
+                                            width: 100.0,
+                                            child: Row(children: <Widget>[
+                                              IconButton(
+                                                onPressed: () async {
+                                                  await getModal(
+                                                      context,
+                                                      FarmTypeOperation.update,
+                                                      docSnap);
+                                                },
+                                                icon: const Icon(Icons.edit),
+                                              ),
+                                              IconButton(
+                                                  icon:
+                                                      const Icon(Icons.delete),
+                                                  onPressed: () => DBController
+                                                      .to
+                                                      .deleteFarm(docSnap.id)),
+                                            ]),
+                                          )
+                                        : const SizedBox.shrink(),
+                                  ),
                                 ),
                               ));
                         });
@@ -111,7 +120,10 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               child: TextButton(
                 onPressed: () {
-                  Get.to(() => DetailedPlantPage());
+                  //TODO: Remover debug
+                  Get.to(() => DetailedPlantPage(
+                        farmID: 'sxB9BWdrjuaa9uJ3Zb9w',
+                      ));
                 },
                 child: const Text('Ir para fazenda x'),
               ),

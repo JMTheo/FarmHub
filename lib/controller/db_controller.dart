@@ -1,13 +1,15 @@
 import 'dart:async';
 
-import 'package:automacao_horta/model/user_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import '../components/toast_util.dart';
+
 import '../database/db_firestore.dart';
 
 import '../enums/ToastOptions.dart';
+
+import '../model/user_data.dart';
 import '../model/farm.dart';
 import '../model/ground.dart';
 

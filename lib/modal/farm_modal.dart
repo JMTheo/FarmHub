@@ -1,9 +1,11 @@
-import 'package:automacao_horta/enums/FarmTypeOperation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../enums/FarmTypeOperation.dart';
+
 import '../controller/db_controller.dart';
+
 import '../model/farm.dart';
 
 getModal(context, FarmTypeOperation type,

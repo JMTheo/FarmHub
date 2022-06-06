@@ -9,6 +9,10 @@ import '../controller/controller.dart';
 final controller = Controller();
 
 class DetailedPlantPage extends StatefulWidget {
+  final String farmID;
+
+  const DetailedPlantPage({required this.farmID});
+
   @override
   _DetailedPlantPageState createState() => _DetailedPlantPageState();
 }
@@ -18,8 +22,8 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-          child: Text('Automação da horta'),
+        title: Center(
+          child: Text('Fazenda - ${widget.farmID}'),
         ),
       ),
       body: Column(
@@ -76,12 +80,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                   return BottomCard(
                     titulo: 'Umidade \ndo Ar',
                     valor: '${controller.umidadeAr}%',
-                  );
-                }),
-                Observer(builder: (_) {
-                  return BottomCard(
-                    titulo: 'Luminosidade',
-                    valor: '${controller.luminosidade}',
                   );
                 }),
               ],
