@@ -116,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                     height: 20,
                   ),
                   ElevatedButton(
-                    child: const Text('Create'),
+                    child: const Text('Criar fazenda'),
                     onPressed: () async {
                       final String name = _nameController.text;
                       final String users = _userController.text;
@@ -142,7 +142,7 @@ class _HomePageState extends State<HomePage> {
     }
 
     DBController.to.getUserData(AuthService.to.user!.uid);
-    DBController.to.getAllOwnerFarms(AuthService.to.user!.uid);
+    DBController.to.getAllOwnerFarms(DBController.to.userData.value.email!);
     return Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -172,7 +172,8 @@ class _HomePageState extends State<HomePage> {
             Expanded(
               flex: 3,
               child: StreamBuilder<QuerySnapshot>(
-                  stream: DBController.to.getFarms(AuthService.to.user!.uid),
+                  stream: DBController.to
+                      .getFarms(DBController.to.userData.value.email!),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (snapshot.hasError) {

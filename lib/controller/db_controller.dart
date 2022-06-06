@@ -34,7 +34,7 @@ class DBController extends GetxController {
   Future addFarm(Farm farmObj) async {
     final json = farmObj.toJson();
     await _db.collection('farm').add(json);
-    await getAllOwnerFarms(farmObj.owner);
+    await getAllOwnerFarms(farmObj.owner!);
   }
 
   getUserData(uid) {
@@ -60,10 +60,10 @@ class DBController extends GetxController {
     return query;
   }
 
-  Stream<QuerySnapshot> getFarms(String uid) {
+  Stream<QuerySnapshot> getFarms(String email) {
     final Stream<QuerySnapshot> farm = _db
         .collection('farm')
-        .where('canAccess', arrayContains: uid)
+        .where('canAccess', arrayContains: email)
         .snapshots();
     return farm;
   }
@@ -73,10 +73,10 @@ class DBController extends GetxController {
     await _db.collection('farm').doc(farmObj.id).update(json);
   }
 
-  Future getAllSharedFarms(uid) async {
+  Future getAllSharedFarms(String email) async {
     await _db
         .collection('farm')
-        .where('canAccess', arrayContains: uid)
+        .where('canAccess', arrayContains: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
               sharedFarmsIDs.addIf(
@@ -85,10 +85,10 @@ class DBController extends GetxController {
             }));
   }
 
-  Future getOwnerData(String uid) async {
+  Future getOwnerData(String email) async {
     await _db
         .collection('users')
-        .where('uid_auth', isEqualTo: uid)
+        .where('uid_auth', isEqualTo: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
               UserData userObj = UserData.fromJson(document.data());
@@ -96,10 +96,10 @@ class DBController extends GetxController {
             }));
   }
 
-  Future getAllOwnerFarms(uid) async {
+  Future getAllOwnerFarms(String email) async {
     await _db
         .collection('farm')
-        .where("owner", isEqualTo: uid)
+        .where("owner", isEqualTo: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
               ownerFarmsIDs.addIf(
