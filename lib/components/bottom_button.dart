@@ -13,6 +13,7 @@ class BottomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
+        //TODO: Talvez arredondar os cantos desse botão
         color: kDefaultColorGreen,
         margin: const EdgeInsets.only(top: 10.0),
         padding: const EdgeInsets.only(bottom: 5.0),

@@ -1,15 +1,18 @@
 import 'package:automacao_horta/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../enums/FarmTypeOperation.dart';
 
+import '../components/outline_text_form.dart';
 import '../controller/db_controller.dart';
 
 import '../model/ground.dart';
 
 addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
     [DocumentSnapshot? documentSnapshot]) {
+  final formKey = GlobalKey<FormState>();
   final regionController = TextEditingController();
   final specieController = TextEditingController();
   final typeController = TextEditingController();
@@ -33,57 +36,79 @@ addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
               left: 20,
               right: 20,
               bottom: MediaQuery.of(ctx).viewInsets.bottom + 20),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                controller: regionController,
-                decoration: const InputDecoration(labelText: 'Região'),
-              ),
-              TextField(
-                controller: specieController,
-                decoration: const InputDecoration(
-                  labelText: 'Espécie',
+          child: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                OutlineTextForm(
+                  hintTxt: 'Região',
+                  iconData: FontAwesomeIcons.map,
+                  hideText: false,
+                  txtController: regionController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => (value == null || value.isEmpty)
+                      ? 'Campo obrigatório.'
+                      : null,
                 ),
-              ),
-              TextField(
-                controller: typeController,
-                decoration: const InputDecoration(
-                  labelText: 'Tipo',
+                kSpaceBox,
+                OutlineTextForm(
+                  hintTxt: 'Espécie',
+                  iconData: FontAwesomeIcons.leaf,
+                  hideText: false,
+                  txtController: specieController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => (value == null || value.isEmpty)
+                      ? 'Campo obrigatório.'
+                      : null,
                 ),
-              ),
-              kSpaceBox,
-              ElevatedButton(
-                child: Text(buttonText),
-                onPressed: () async {
-                  final String region = regionController.text.trim();
-                  final String specie = specieController.text.trim();
-                  final String type = typeController.text.trim().toLowerCase();
+                kSpaceBox,
+                OutlineTextForm(
+                  hintTxt: 'Selecione o tipo',
+                  iconData: FontAwesomeIcons.list,
+                  hideText: false,
+                  txtController: typeController,
+                  textInputAction: TextInputAction.next,
+                  validator: (value) => (value == null || value.isEmpty)
+                      ? 'Campo obrigatório.'
+                      : null,
+                ),
+                kSpaceBox,
+                ElevatedButton(
+                  child: Text(buttonText),
+                  onPressed: () async {
+                    if (!formKey.currentState!.validate()) return;
 
-                  Ground ground = Ground(
-                      farm: '', type: type, region: region, specie: specie);
+                    final String region = regionController.text.trim();
+                    final String specie = specieController.text.trim();
+                    final String type =
+                        typeController.text.trim().toLowerCase();
 
-                  if (documentSnapshot != null) {
-                    ground.id = documentSnapshot.id;
-                    ground.farm = documentSnapshot['farm'];
-                  } else {
-                    ground.farm = farmID!;
-                  }
+                    Ground ground = Ground(
+                        farm: '', type: type, region: region, specie: specie);
 
-                  if (typeOperation == FarmTypeOperation.create) {
-                    DBController.to.addGround(ground);
-                  } else {
-                    DBController.to.updateGround(ground);
-                  }
+                    if (documentSnapshot != null) {
+                      ground.id = documentSnapshot.id;
+                      ground.farm = documentSnapshot['farm'];
+                    } else {
+                      ground.farm = farmID!;
+                    }
 
-                  regionController.text = '';
-                  specieController.text = '';
-                  typeController.text = '';
-                  Navigator.of(ctx).pop();
-                },
-              )
-            ],
+                    if (typeOperation == FarmTypeOperation.create) {
+                      DBController.to.addGround(ground);
+                    } else {
+                      DBController.to.updateGround(ground);
+                    }
+
+                    regionController.text = '';
+                    specieController.text = '';
+                    typeController.text = '';
+                    Navigator.of(ctx).pop();
+                  },
+                )
+              ],
+            ),
           ),
         );
       });
