@@ -1,10 +1,15 @@
-import 'package:automacao_horta/model/generic_sensor.dart';
+import 'package:automacao_horta/screens/add_ground.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../components/bottom_card.dart';
 import '../controller/iot_controller.dart';
+
+import '../model/generic_sensor.dart';
+
+import '../components/bottom_button.dart';
+import '../components/bottom_card.dart';
+import '../components/card_plant.dart';
 
 class DetailedPlantPage extends StatefulWidget {
   final String farmID;
@@ -33,9 +38,8 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
-            flex: 4,
+            flex: 5,
             //TODO: Arrumar funções de acionamento
-            //TODO: DEIXAR DINÂMICO O CARD
             //TODO: CRUD ZONA
             //TODO: REESTRURAR CARD ZONA
             //TODO: LISTAR HISTÓRICO
@@ -62,21 +66,16 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                       itemBuilder: (context, index) {
                         final DocumentSnapshot docSnap =
                             snapshot.data!.docs[index];
-                        List<GenericSensor> temp = (docSnap['temperature']
+                        List<GenericSensor> tempList = (docSnap['temperature']
                                 as List)
                             .map((itemTemp) => GenericSensor.fromJson(itemTemp))
                             .toList();
-                        print(temp);
-                        print(docSnap['temperature'][0]['value']);
-                        // final temperature = docSnap['temperature']
-                        //     as List<Map<String, dynamic>>;
-                        // temperature.map((temp) {
-                        //   print('$index - Temperature ${temp['value']}');
-                        // });
-
-                        return Card(
-                            margin: const EdgeInsets.all(10.0),
-                            child: Text('url: ${docSnap['temperature']}'));
+                        print(tempList.toString());
+                        return CardPlant(
+                          apelidoPlanta: docSnap['specie'],
+                          especiePlanta: docSnap['region'],
+                          umidadeDoSolo: 10,
+                        );
                       });
                 }),
           ),
@@ -95,6 +94,14 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
               ],
             ),
           ),
+          BottomButton(
+            //TODO: AJUSTAR NOME DO BOTÃO (ASSEMBLEIA)
+            buttonTitle: 'Adicionar Zona',
+            onTap: () {
+              print('NAO AGUENTO MAIS!!!!');
+              Get.to(() => const AddGround());
+            },
+          )
         ],
       ),
     );

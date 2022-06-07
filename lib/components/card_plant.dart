@@ -7,7 +7,7 @@ import 'package:automacao_horta/constants.dart';
 class CardPlant extends StatefulWidget {
   CardPlant({
     Key? key,
-    required this.urlImg,
+    this.urlImg,
     required this.apelidoPlanta,
     required this.especiePlanta,
     this.estadoLampada,
@@ -16,7 +16,7 @@ class CardPlant extends StatefulWidget {
     this.functionL,
   }) : super(key: key);
 
-  final String urlImg;
+  final String? urlImg;
   final String apelidoPlanta;
   final String especiePlanta;
   final VoidCallback? functionL;

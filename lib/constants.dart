@@ -45,6 +45,13 @@ const Color kScaffoldBGColor = Color(0XFF0A0E21);
 
 const Color kAltAccentColour = Color(0xFFEB1555);
 
+const double kBottomContainerHeight = 50.0;
+
+const TextStyle kLargeButtonTextStyle = TextStyle(
+  fontSize: 25.0,
+  fontWeight: FontWeight.bold,
+);
+
 const kErrorToast = {
   'bgColor': Colors.red,
   'txtColor': Colors.white,
