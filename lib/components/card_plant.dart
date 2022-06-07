@@ -20,14 +20,14 @@ class CardPlant extends StatefulWidget {
     this.functionL,
     this.groundObj,
     required this.id,
-    required this.apelidoPlanta,
-    required this.especiePlanta,
+    required this.specie,
+    required this.region,
   }) : super(key: key);
 
   final DocumentSnapshot? groundObj;
   final String id;
-  final String apelidoPlanta;
-  final String especiePlanta;
+  final String specie;
+  final String region;
   final VoidCallback? functionL;
   final VoidCallback? functionA;
   final String? urlImg;
@@ -66,19 +66,20 @@ class _CardPlantState extends State<CardPlant> {
           // ),
           const SizedBox(height: 80.0),
           Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.fromLTRB(20.0, 5, 0, 0),
             child: Text(
-              widget.apelidoPlanta,
+              widget.region,
               style: kSubTitle,
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 0, 0),
+            padding: const EdgeInsets.only(left: 20.0),
             child: Text(
-              widget.especiePlanta,
+              widget.specie,
               style: kHighTitle,
             ),
           ),
+
           Row(
             children: [
               const SizedBox(
