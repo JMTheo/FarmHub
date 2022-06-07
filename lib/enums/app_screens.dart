@@ -1,0 +1,1 @@
+enum AppScreens { farm, ground }

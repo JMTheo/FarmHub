@@ -1,3 +1,5 @@
+import 'package:automacao_horta/enums/app_screens.dart';
+import 'package:automacao_horta/modal/delete_confirm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -109,9 +111,11 @@ class _HomePageState extends State<HomePage> {
                                               IconButton(
                                                   icon:
                                                       const Icon(Icons.delete),
-                                                  onPressed: () => DBController
-                                                      .to
-                                                      .deleteFarm(docSnap.id)),
+                                                  onPressed: () =>
+                                                      getModalConfirmDelete(
+                                                          context,
+                                                          docSnap.id,
+                                                          AppScreens.farm)),
                                             ]),
                                           )
                                         : const SizedBox.shrink(),

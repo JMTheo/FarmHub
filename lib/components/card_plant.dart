@@ -1,5 +1,5 @@
-import 'package:automacao_horta/controller/db_controller.dart';
 import 'package:automacao_horta/enums/FarmTypeOperation.dart';
+import 'package:automacao_horta/enums/app_screens.dart';
 import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:automacao_horta/components/mini_card.dart';
 import 'package:automacao_horta/constants.dart';
+
+import '../modal/delete_confirm.dart';
 
 class CardPlant extends StatefulWidget {
   CardPlant({
@@ -93,7 +95,7 @@ class _CardPlantState extends State<CardPlant> {
               MiniCard(
                 content: FontAwesomeIcons.trash,
                 onTap: () {
-                  DBController.to.deleteGround(widget.id);
+                  getModalConfirmDelete(context, widget.id, AppScreens.ground);
                 },
               ),
               MiniCard(
