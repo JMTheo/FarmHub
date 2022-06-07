@@ -1,10 +1,12 @@
 import 'package:automacao_horta/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../enums/FarmTypeOperation.dart';
 
+import '../components/outline_text_form.dart';
 import '../controller/db_controller.dart';
 
 import '../model/farm.dart';
@@ -38,19 +40,28 @@ getModal(context, FarmTypeOperation type, String title,
             children: [
               Text(title, style: kHighTitle),
               kSpaceBox,
-              TextField(
-                controller: nameController,
-                decoration: const InputDecoration(labelText: 'Nome da fazenda'),
+              OutlineTextForm(
+                hintTxt: 'Nome da fazenda',
+                iconData: FontAwesomeIcons.tractor,
+                hideText: false,
+                txtController: nameController,
+                textInputAction: TextInputAction.next,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Campo obrigatório.'
+                    : null,
               ),
-              TextField(
-                controller: userController,
-                decoration: const InputDecoration(
-                  labelText: 'Usuários',
-                ),
+              kSpaceBoxModal,
+              OutlineTextForm(
+                hintTxt: 'Usuários',
+                iconData: FontAwesomeIcons.user,
+                hideText: false,
+                txtController: userController,
+                textInputAction: TextInputAction.next,
+                validator: (value) => (value == null || value.isEmpty)
+                    ? 'Campo obrigatório.'
+                    : null,
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              kSpaceBox,
               ElevatedButton(
                 child: Text(buttonText),
                 onPressed: () async {
