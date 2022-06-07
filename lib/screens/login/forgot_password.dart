@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:get/get.dart';
 
 import '../../components/custom_elevated_button.dart';
 import '../../components/outline_text_form.dart';
@@ -12,7 +12,7 @@ import '../../main.dart';
 import 'auth_page.dart';
 
 class ForgotPassWordPage extends StatefulWidget {
-  ForgotPassWordPage({Key? key}) : super(key: key);
+  const ForgotPassWordPage({Key? key}) : super(key: key);
 
   @override
   State<ForgotPassWordPage> createState() => _ForgotPassWordPageState();
@@ -55,7 +55,7 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
                   txtController: emailController,
                   textInputAction: TextInputAction.next,
                   autoValidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => EmailValidator.validate(value!)
+                  validator: (value) => (value == null || value.isEmail)
                       ? null
                       : "Por favor, coloque um e-mail válido.",
                 ),

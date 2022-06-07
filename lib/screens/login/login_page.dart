@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
+import 'package:get/get.dart';
 
 import '../../services/auth_service.dart';
 
@@ -61,7 +61,7 @@ class _LoginPageState extends State<LoginPage> {
                     hintTxt: 'Digite o seu e-mail',
                     hideText: false,
                     txtController: emailController,
-                    validator: (value) => EmailValidator.validate(value!)
+                    validator: (value) => (value == null || value.isEmail)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
                   ),
@@ -101,7 +101,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                     onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ForgotPassWordPage())),
+                        builder: (context) => const ForgotPassWordPage())),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

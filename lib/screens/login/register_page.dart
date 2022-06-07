@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 import '../../model/user_data.dart';
 import '../../services/auth_service.dart';
@@ -106,8 +106,8 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                     textInputAction: TextInputAction.next,
                     autoValidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) => (value != null && value.length != 11)
-                        ? "Por favor, coloque apenas digitos."
+                    validator: (value) => (value != null && !value.isCpf)
+                        ? "Por favor, coloque um CPF Válido!."
                         : null,
                   ),
                   const SizedBox(
@@ -120,7 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     txtController: emailController,
                     textInputAction: TextInputAction.next,
                     autoValidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) => EmailValidator.validate(value!)
+                    validator: (value) => (value == null || value.isEmail)
                         ? null
                         : "Por favor, coloque um e-mail válido.",
                   ),
