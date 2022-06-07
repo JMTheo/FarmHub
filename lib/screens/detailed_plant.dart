@@ -5,8 +5,6 @@ import 'package:get/get.dart';
 
 import '../controller/iot_controller.dart';
 
-import '../model/generic_sensor.dart';
-
 import '../components/bottom_button.dart';
 import '../components/bottom_card.dart';
 import '../components/card_plant.dart';
@@ -66,15 +64,17 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                       itemBuilder: (context, index) {
                         final DocumentSnapshot docSnap =
                             snapshot.data!.docs[index];
-                        List<GenericSensor> tempList = (docSnap['temperature']
-                                as List)
-                            .map((itemTemp) => GenericSensor.fromJson(itemTemp))
-                            .toList();
-                        print(tempList.toString());
+                        //TODO: Ajustar para pegar dados de histórico
+                        // List<GenericSensor> tempList = (docSnap['temperature']
+                        //         as List)
+                        //     .map((itemTemp) => GenericSensor.fromJson(itemTemp))
+                        //     .toList();
+                        //print(tempList.toString());
                         return CardPlant(
                           apelidoPlanta: docSnap['specie'],
                           especiePlanta: docSnap['region'],
                           umidadeDoSolo: 10,
+                          id: docSnap.id,
                         );
                       });
                 }),

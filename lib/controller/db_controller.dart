@@ -130,4 +130,12 @@ class DBController extends GetxController {
       type: ToastOption.success,
     ).getToast();
   }
+
+  Future<void> deleteGround(String groundID) async {
+    await _db.collection('ground').doc(groundID).delete();
+    ToastUtil(
+      text: 'Sucesso ao deletar campo!',
+      type: ToastOption.success,
+    ).getToast();
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:automacao_horta/controller/db_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -8,12 +9,13 @@ class CardPlant extends StatefulWidget {
   CardPlant({
     Key? key,
     this.urlImg,
-    required this.apelidoPlanta,
-    required this.especiePlanta,
     this.estadoLampada,
     this.umidadeDoSolo,
     this.functionA,
     this.functionL,
+    required this.id,
+    required this.apelidoPlanta,
+    required this.especiePlanta,
   }) : super(key: key);
 
   final String? urlImg;
@@ -21,6 +23,7 @@ class CardPlant extends StatefulWidget {
   final String especiePlanta;
   final VoidCallback? functionL;
   final VoidCallback? functionA;
+  final String id;
   int? umidadeDoSolo;
   bool? estadoLampada;
 
@@ -81,12 +84,19 @@ class _CardPlantState extends State<CardPlant> {
                 content: FontAwesomeIcons.droplet,
                 onTap: widget.functionA,
               ),
+              //TODO: Acrescentar modal de confirmação
+              MiniCard(
+                content: FontAwesomeIcons.trash,
+                onTap: () {
+                  DBController.to.deleteGround(widget.id);
+                },
+              ),
               MiniCard(
                 content: FontAwesomeIcons.question,
                 onTap: () {
                   print('Interrogação');
                 },
-              ), //Ir para página da planta
+              ),
             ],
           )
         ],
