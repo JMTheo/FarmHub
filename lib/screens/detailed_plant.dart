@@ -1,14 +1,19 @@
+import 'package:automacao_horta/model/generic_sensor.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../components/bottom_card.dart';
-import '../components/card_plant.dart';
 import '../controller/iot_controller.dart';
 
 class DetailedPlantPage extends StatefulWidget {
   final String farmID;
+  final String name;
+  final Stream<QuerySnapshot<Object?>> stream;
 
-  const DetailedPlantPage({required this.farmID});
+  // ignore: use_key_in_widget_constructors
+  const DetailedPlantPage(
+      {required this.farmID, required this.name, required this.stream});
 
   @override
   _DetailedPlantPageState createState() => _DetailedPlantPageState();
@@ -20,7 +25,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
     return Scaffold(
       appBar: AppBar(
         title: Center(
-          child: Text('Fazenda - ${widget.farmID}'),
+          child: Text('Fazenda - ${widget.name}'),
         ),
       ),
       body: Column(
@@ -29,42 +34,51 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
         children: [
           Expanded(
             flex: 4,
-            child: Container(
-              margin: const EdgeInsets.symmetric(vertical: 20.0),
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Obx(() => CardPlant(
-                        urlImg: 'assets/img/fruits/apple.png',
-                        apelidoPlanta: 'Cleitinho',
-                        especiePlanta: 'Hortelã',
-                        estadoLampada: IoTController.to.estadoLampada.value,
-                        umidadeDoSolo: 20,
-                        //TODO: Arrumar funções de acionamento
-                        //TODO: DEIXAR DINÂMICO O CARD
-                        //TODO: CRUD ZONA
-                        //TODO: REESTRURAR CARD ZONA
-                        //TODO: LISTAR HISTÓRICO
-                        //functionA: IoTController.to.acionarAgua(),
-                        // functionL: IoTController.to.mudarEstadoLampada(),
-                      )),
-                  Obx(() => CardPlant(
-                        urlImg: 'assets/img/planta-carnivora.png',
-                        apelidoPlanta: 'Maria',
-                        especiePlanta: 'Planta Carnívora',
-                        estadoLampada: IoTController.to.estadoLampada.value,
-                        umidadeDoSolo: 15,
-                      )),
-                  Obx(() => CardPlant(
-                        urlImg: 'assets/img/tomate.png',
-                        apelidoPlanta: 'Matilda',
-                        especiePlanta: 'Tomate',
-                        estadoLampada: IoTController.to.estadoLampada.value,
-                        umidadeDoSolo: 50,
-                      )),
-                ],
-              ),
-            ),
+            //TODO: Arrumar funções de acionamento
+            //TODO: DEIXAR DINÂMICO O CARD
+            //TODO: CRUD ZONA
+            //TODO: REESTRURAR CARD ZONA
+            //TODO: LISTAR HISTÓRICO
+            child: StreamBuilder<QuerySnapshot>(
+                stream: widget.stream,
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (snapshot.hasError) {
+                    return Text('Erro ao receber dados: ${snapshot.error}');
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (snapshot.data!.docs.isEmpty) {
+                    return const Text('Não há ZONAS cadastradas ao seu perfil');
+                  }
+
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot docSnap =
+                            snapshot.data!.docs[index];
+                        List<GenericSensor> temp = (docSnap['temperature']
+                                as List)
+                            .map((itemTemp) => GenericSensor.fromJson(itemTemp))
+                            .toList();
+                        print(temp);
+                        print(docSnap['temperature'][0]['value']);
+                        // final temperature = docSnap['temperature']
+                        //     as List<Map<String, dynamic>>;
+                        // temperature.map((temp) {
+                        //   print('$index - Temperature ${temp['value']}');
+                        // });
+
+                        return Card(
+                            margin: const EdgeInsets.all(10.0),
+                            child: Text('url: ${docSnap['temperature']}'));
+                      });
+                }),
           ),
           Expanded(
             flex: 2,

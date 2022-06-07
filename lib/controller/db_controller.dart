@@ -54,7 +54,6 @@ class DBController extends GetxController {
                   email: document['email'],
                   uidAuth: uid);
               userData.value = user;
-              print('user ${userData.value.email}');
             }));
   }
 
@@ -64,6 +63,19 @@ class DBController extends GetxController {
         .where('canAccess', arrayContains: email)
         .snapshots();
     return farm;
+  }
+
+  Stream<QuerySnapshot> getGrounds(String farmID) {
+    final Stream<QuerySnapshot> ground =
+        _db.collection('ground').where('farm', isEqualTo: farmID).snapshots();
+    return ground;
+  }
+
+  Future<Stream<List<Ground>>> getAllGround() async {
+    final groundRef = _db.collection('ground');
+    var query = groundRef.snapshots().map((snapshot) =>
+        snapshot.docs.map((doc) => Ground.fromJson(doc.data())).toList());
+    return query;
   }
 
   Future updateFarm(Farm farmObj) async {
@@ -100,18 +112,10 @@ class DBController extends GetxController {
         .where("owner", isEqualTo: email)
         .get()
         .then((snapshot) => snapshot.docs.forEach((document) {
-              print('getAllOwnerFarms: ${document.reference.id}');
               ownerFarmsIDs.addIf(
                   !ownerFarmsIDs.contains(document.reference.id),
                   document.reference.id);
             }));
-  }
-
-  Future<Stream<List<Ground>>> getAllGround() async {
-    final groundRef = _db.collection('ground');
-    var query = groundRef.snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => Ground.fromJson(doc.data())).toList());
-    return query;
   }
 
   eraseDataOnLogout() {

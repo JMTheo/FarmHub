@@ -1,30 +1,38 @@
+import './generic_sensor.dart';
+
 class Ground {
-  String id;
+  String? id;
   final String name;
   final String type;
-  final List<dynamic> farm; //Ref
-  final List<dynamic>? soilHumidity; //Ref
-  final List<dynamic>? temperature; //Ref
-  final List<dynamic>? water; //Ref
+  final String urlImg;
+  final String region;
+  final String specie;
+  final String farm; //Ref
+  final List<GenericSensor>? soilHumidity; //Ref
+  final List<GenericSensor>? temperature; //Ref
+  final List<GenericSensor>? water; //Ref
 
   Ground({
     this.id = '',
     required this.farm,
     required this.name,
     required this.type,
+    required this.region,
+    required this.urlImg,
+    required this.specie,
     this.soilHumidity,
     this.temperature,
     this.water,
   });
 
   Map<String, dynamic> toJson() => {
-        'id': id,
         'type': type,
         'name': name,
         'farm': farm,
-        'soil_humidity': soilHumidity,
-        'temperature': temperature,
-        'water': water,
+        if (id != null) 'id': id,
+        if (soilHumidity != null) 'soilHumidity': soilHumidity,
+        if (temperature != null) 'temperature': temperature,
+        if (water != null) 'water': water,
       };
 
   static Ground fromJson(Map<String, dynamic> json) => Ground(
@@ -32,7 +40,10 @@ class Ground {
         type: json['type'],
         name: json['name'],
         farm: json['farm'],
-        soilHumidity: json['soil_humidity'],
+        region: json['region'],
+        urlImg: json['urlImg'],
+        specie: json['specie'],
+        soilHumidity: json['soilHumidity'],
         temperature: json['temperature'],
         water: json['water'],
       );

@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
               ),
             )),
             Expanded(
-              flex: 3,
+              flex: 4,
               child: StreamBuilder<QuerySnapshot>(
                   stream: widget.stream,
                   builder: (BuildContext context,
@@ -80,6 +80,9 @@ class _HomePageState extends State<HomePage> {
                                 onTap: () => {
                                   Get.to(() => DetailedPlantPage(
                                         farmID: docSnap.id,
+                                        name: docSnap['name'],
+                                        stream: DBController.to
+                                            .getGrounds(docSnap.id),
                                       ))
                                 },
                                 child: Card(
@@ -117,21 +120,10 @@ class _HomePageState extends State<HomePage> {
                         });
                   }),
             ),
-            Expanded(
-              child: TextButton(
-                onPressed: () {
-                  //TODO: Remover debug
-                  // DBController.to.getUserData2(AuthService.to.user!.uid);
-                  Get.to(() => const DetailedPlantPage(
-                        farmID: 'sxB9BWdrjuaa9uJ3Zb9w',
-                      ));
-                },
-                child: const Text('Ir para fazenda x'),
-              ),
-            )
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: kDefaultColorGreen,
           onPressed: () async =>
               await getModal(context, FarmTypeOperation.create),
           child: const Icon(Icons.add),

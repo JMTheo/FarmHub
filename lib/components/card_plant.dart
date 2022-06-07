@@ -6,14 +6,15 @@ import 'package:automacao_horta/constants.dart';
 
 class CardPlant extends StatefulWidget {
   CardPlant({
+    Key? key,
     required this.urlImg,
     required this.apelidoPlanta,
     required this.especiePlanta,
-    required this.estadoLampada,
+    this.estadoLampada,
     this.umidadeDoSolo,
     this.functionA,
     this.functionL,
-  });
+  }) : super(key: key);
 
   final String urlImg;
   final String apelidoPlanta;
@@ -21,19 +22,13 @@ class CardPlant extends StatefulWidget {
   final VoidCallback? functionL;
   final VoidCallback? functionA;
   int? umidadeDoSolo;
-  bool estadoLampada;
+  bool? estadoLampada;
 
   @override
   _CardPlantState createState() => _CardPlantState();
 }
 
 class _CardPlantState extends State<CardPlant> {
-  _mudarLuz() {
-    return widget.estadoLampada
-        ? FontAwesomeIcons.solidLightbulb
-        : FontAwesomeIcons.lightbulb;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,16 +43,17 @@ class _CardPlantState extends State<CardPlant> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Image.asset(
-                widget.urlImg,
-                height: 150.0,
-                width: 150.0,
-              ),
-            ),
-          ),
+          // Center(
+          //   child: Padding(
+          //     padding: const EdgeInsets.only(top: 8.0),
+          //     child:
+          //     Image.asset(
+          //       widget.urlImg,
+          //       height: 150.0,
+          //       width: 150.0,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(height: 80.0),
           Padding(
             padding: const EdgeInsets.only(left: 20.0),
@@ -79,15 +75,11 @@ class _CardPlantState extends State<CardPlant> {
                 width: 10.0,
               ),
               MiniCard(
-                content: widget.umidadeDoSolo.toString() + '%',
+                content: '${widget.umidadeDoSolo}%',
               ), //Dado sensor de umidade de solo
               MiniCard(
                 content: FontAwesomeIcons.droplet,
                 onTap: widget.functionA,
-              ),
-              MiniCard(
-                content: _mudarLuz(),
-                onTap: widget.functionL,
               ),
               MiniCard(
                 content: FontAwesomeIcons.question,
