@@ -1,3 +1,5 @@
+import 'package:automacao_horta/enums/FarmTypeOperation.dart';
+import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:automacao_horta/screens/add_ground.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -75,6 +77,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                           especiePlanta: docSnap['region'],
                           umidadeDoSolo: 10,
                           id: docSnap.id,
+                          groundObj: docSnap,
                         );
                       });
                 }),
@@ -96,9 +99,16 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
           ),
           BottomButton(
             //TODO: AJUSTAR NOME DO BOTÃO (ASSEMBLEIA)
-            buttonTitle: 'Adicionar Zona',
+            buttonTitle: 'Adicionar Região opção 1',
+            onTap: () async {
+              await addGroundModal(
+                  context, FarmTypeOperation.create, widget.farmID);
+            },
+          ),
+          BottomButton(
+            //TODO: AJUSTAR NOME DO BOTÃO (ASSEMBLEIA)
+            buttonTitle: 'Adicionar Região opção 2',
             onTap: () {
-              print('NAO AGUENTO MAIS!!!!');
               Get.to(() => const AddGround());
             },
           )

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class OutlineTextForm extends StatelessWidget {
-  OutlineTextForm({
+  const OutlineTextForm({
     required this.hintTxt,
     required this.iconData,
-    required this.validator,
     required this.hideText,
+    this.validator,
     this.txtController,
     this.autoValidateMode,
     this.textInputAction,

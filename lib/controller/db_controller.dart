@@ -131,6 +131,16 @@ class DBController extends GetxController {
     ).getToast();
   }
 
+  Future addGround(Ground groundObj) async {
+    final json = groundObj.toJson();
+    await _db.collection('ground').add(json);
+  }
+
+  Future updateGround(Ground groundObj) async {
+    final json = groundObj.toJson();
+    await _db.collection('ground').doc(groundObj.id).update(json);
+  }
+
   Future<void> deleteGround(String groundID) async {
     await _db.collection('ground').doc(groundID).delete();
     ToastUtil(

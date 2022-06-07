@@ -65,3 +65,7 @@ const kSuccessToast = {
   'bgColor': Colors.green,
   'txtColor': Colors.white,
 };
+
+const SizedBox kSpaceBox = SizedBox(
+  height: 20,
+);

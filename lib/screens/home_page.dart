@@ -1,16 +1,16 @@
-import 'package:automacao_horta/screens/login/profile_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants.dart';
-import '../controller/db_controller.dart';
-
 import '../enums/FarmTypeOperation.dart';
+
+import '../controller/db_controller.dart';
+import '../services/auth_service.dart';
 import '../modal/farm_modal.dart';
 
-import '../components/avatar_card.dart';
 import '../screens/detailed_plant.dart';
+import '../components/avatar_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key, required this.stream}) : super(key: key);
@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
           actions: <Widget>[
             IconButton(
                 onPressed: () {
-                  //AuthService.to.logout();
-                  Get.to(() => const ProfilePage());
+                  AuthService.to.logout();
+                  //Get.to(() => const ProfilePage());
                 },
                 icon: const Icon(Icons.person)),
           ],

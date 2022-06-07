@@ -65,9 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                         ? null
                         : "Por favor, coloque um e-mail válido.",
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   OutlineTextForm(
                     hintTxt: 'Senha',
                     iconData: Icons.lock,
@@ -79,9 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                         ? 'A senha deve contar no mínimo 6 caracteres'
                         : null,
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   CustomElevetedButton(
                       onTap: () {
                         if (_formKey.currentState!.validate()) {
@@ -89,9 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                       btnLabel: 'Entrar'),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   GestureDetector(
                     child: const Text(
                       'Esqueceu a senha?',
@@ -100,8 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                         fontSize: 15.0,
                       ),
                     ),
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const ForgotPassWordPage())),
+                    onTap: () => Get.to(() => const ForgotPassWordPage()),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,

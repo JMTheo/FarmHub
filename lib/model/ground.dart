@@ -2,12 +2,11 @@ import './generic_sensor.dart';
 
 class Ground {
   String? id;
-  final String name;
+  String farm; //Ref
   final String type;
-  final String urlImg;
   final String region;
   final String specie;
-  final String farm; //Ref
+  final String? urlImg;
   final List<GenericSensor>? soilHumidity; //Ref
   final List<GenericSensor>? temperature; //Ref
   final List<GenericSensor>? water; //Ref
@@ -15,11 +14,10 @@ class Ground {
   Ground({
     this.id = '',
     required this.farm,
-    required this.name,
+    required this.specie,
     required this.type,
     required this.region,
-    required this.urlImg,
-    required this.specie,
+    this.urlImg,
     this.soilHumidity,
     this.temperature,
     this.water,
@@ -27,8 +25,9 @@ class Ground {
 
   Map<String, dynamic> toJson() => {
         'type': type,
-        'name': name,
+        'specie': specie,
         'farm': farm,
+        'region': region,
         if (id != null) 'id': id,
         if (soilHumidity != null) 'soilHumidity': soilHumidity,
         if (temperature != null) 'temperature': temperature,
@@ -38,7 +37,6 @@ class Ground {
   static Ground fromJson(Map<String, dynamic> json) => Ground(
         id: json['id'],
         type: json['type'],
-        name: json['name'],
         farm: json['farm'],
         region: json['region'],
         urlImg: json['urlImg'],

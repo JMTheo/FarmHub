@@ -1,4 +1,7 @@
 import 'package:automacao_horta/controller/db_controller.dart';
+import 'package:automacao_horta/enums/FarmTypeOperation.dart';
+import 'package:automacao_horta/modal/add_ground_modal.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -13,17 +16,19 @@ class CardPlant extends StatefulWidget {
     this.umidadeDoSolo,
     this.functionA,
     this.functionL,
+    this.groundObj,
     required this.id,
     required this.apelidoPlanta,
     required this.especiePlanta,
   }) : super(key: key);
 
-  final String? urlImg;
+  final DocumentSnapshot? groundObj;
+  final String id;
   final String apelidoPlanta;
   final String especiePlanta;
   final VoidCallback? functionL;
   final VoidCallback? functionA;
-  final String id;
+  final String? urlImg;
   int? umidadeDoSolo;
   bool? estadoLampada;
 
@@ -92,9 +97,10 @@ class _CardPlantState extends State<CardPlant> {
                 },
               ),
               MiniCard(
-                content: FontAwesomeIcons.question,
-                onTap: () {
-                  print('Interrogação');
+                content: Icons.edit,
+                onTap: () async {
+                  await addGroundModal(
+                      context, FarmTypeOperation.update, '', widget.groundObj);
                 },
               ),
             ],

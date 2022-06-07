@@ -34,7 +34,9 @@ class _RegisterPageState extends State<RegisterPage> {
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
-
+    nameController.dispose();
+    surnameController.dispose();
+    cpfController.dispose();
     super.dispose();
   }
 
@@ -75,9 +77,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               : null,
                         ),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      kSpaceBox,
                       Expanded(
                         child: OutlineTextForm(
                           hintTxt: 'Sobrenome',
@@ -92,9 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   OutlineTextForm(
                     hintTxt: 'Digite o seu cpf',
                     iconData: Icons.person,
@@ -110,9 +108,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ? "Por favor, coloque um CPF Válido!."
                         : null,
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   OutlineTextForm(
                     hintTxt: 'Digite o seu e-mail',
                     iconData: Icons.email,
@@ -124,9 +120,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ? null
                         : "Por favor, coloque um e-mail válido.",
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   OutlineTextForm(
                     hintTxt: 'Digite a sua senha',
                     iconData: Icons.lock,
@@ -138,9 +132,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         ? 'A senha deve contar no mínimo 6 caracteres'
                         : null,
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   CustomElevetedButton(
                     btnLabel: 'Cadastrar-se',
                     onTap: () {
@@ -149,9 +141,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       }
                     },
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  kSpaceBox,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
