@@ -80,7 +80,7 @@ addGroundModal(
                 kSpaceBoxModal,
                 ElevatedButton(
                   child: Text(buttonText),
-                  onPressed: () async {
+                  onPressed: () {
                     if (!formKey.currentState!.validate()) return;
 
                     final String region = regionController.text.trim();
