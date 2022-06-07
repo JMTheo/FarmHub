@@ -101,6 +101,7 @@ class _HomePageState extends State<HomePage> {
                                                   await getModal(
                                                       context,
                                                       FarmTypeOperation.update,
+                                                      'Editar fazenda',
                                                       docSnap);
                                                 },
                                                 icon: const Icon(Icons.edit),
@@ -124,8 +125,8 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: kDefaultColorGreen,
-          onPressed: () async =>
-              await getModal(context, FarmTypeOperation.create),
+          onPressed: () async => await getModal(
+              context, FarmTypeOperation.create, 'Adicionar fazenda'),
           child: const Icon(Icons.add),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat);

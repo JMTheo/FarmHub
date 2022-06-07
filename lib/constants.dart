@@ -69,3 +69,6 @@ const kSuccessToast = {
 const SizedBox kSpaceBox = SizedBox(
   height: 20,
 );
+const SizedBox kSpaceBoxModal = SizedBox(
+  height: 10,
+);

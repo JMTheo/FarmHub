@@ -1,3 +1,4 @@
+import 'package:automacao_horta/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import '../controller/db_controller.dart';
 
 import '../model/farm.dart';
 
-getModal(context, FarmTypeOperation type,
+getModal(context, FarmTypeOperation type, String title,
     [DocumentSnapshot? documentSnapshot]) {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController userController = TextEditingController();
@@ -35,6 +36,8 @@ getModal(context, FarmTypeOperation type,
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(title, style: kHighTitle),
+              kSpaceBox,
               TextField(
                 controller: nameController,
                 decoration: const InputDecoration(labelText: 'Nome da fazenda'),

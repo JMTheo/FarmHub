@@ -10,7 +10,8 @@ import '../controller/db_controller.dart';
 
 import '../model/ground.dart';
 
-addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
+addGroundModal(
+    String title, context, FarmTypeOperation typeOperation, String? farmID,
     [DocumentSnapshot? documentSnapshot]) {
   final formKey = GlobalKey<FormState>();
   final regionController = TextEditingController();
@@ -42,6 +43,8 @@ addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(title, style: kHighTitle),
+                kSpaceBoxModal,
                 OutlineTextForm(
                   hintTxt: 'Região',
                   iconData: FontAwesomeIcons.map,
@@ -52,7 +55,7 @@ addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
                       ? 'Campo obrigatório.'
                       : null,
                 ),
-                kSpaceBox,
+                kSpaceBoxModal,
                 OutlineTextForm(
                   hintTxt: 'Espécie',
                   iconData: FontAwesomeIcons.leaf,
@@ -63,7 +66,7 @@ addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
                       ? 'Campo obrigatório.'
                       : null,
                 ),
-                kSpaceBox,
+                kSpaceBoxModal,
                 OutlineTextForm(
                   hintTxt: 'Selecione o tipo',
                   iconData: FontAwesomeIcons.list,
@@ -74,7 +77,7 @@ addGroundModal(context, FarmTypeOperation typeOperation, String? farmID,
                       ? 'Campo obrigatório.'
                       : null,
                 ),
-                kSpaceBox,
+                kSpaceBoxModal,
                 ElevatedButton(
                   child: Text(buttonText),
                   onPressed: () async {

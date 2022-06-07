@@ -100,8 +100,8 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
             //TODO: AJUSTAR NOME DO BOTÃO (ASSEMBLEIA)
             buttonTitle: 'Adicionar Região',
             onTap: () async {
-              await addGroundModal(
-                  context, FarmTypeOperation.create, widget.farmID);
+              await addGroundModal('Adicionar Região', context,
+                  FarmTypeOperation.create, widget.farmID);
             },
           ),
         ],

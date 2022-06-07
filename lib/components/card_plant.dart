@@ -99,8 +99,8 @@ class _CardPlantState extends State<CardPlant> {
               MiniCard(
                 content: Icons.edit,
                 onTap: () async {
-                  await addGroundModal(
-                      context, FarmTypeOperation.update, '', widget.groundObj);
+                  await addGroundModal('Editar região', context,
+                      FarmTypeOperation.update, '', widget.groundObj);
                 },
               ),
             ],
