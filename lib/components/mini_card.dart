@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MiniCard extends StatelessWidget {
-  MiniCard({required this.content, this.onTap});
+  MiniCard({Key? key, required this.content, this.onTap}) : super(key: key);
 
   final dynamic content;
   final VoidCallback? onTap;

@@ -1,4 +1,4 @@
-import 'package:automacao_horta/enums/FarmTypeOperation.dart';
+import 'package:automacao_horta/enums/farm_type_operation.dart';
 import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +25,12 @@ class DetailedPlantPage extends StatefulWidget {
 
 class _DetailedPlantPageState extends State<DetailedPlantPage> {
   @override
+  void initState() {
+    //IoTController.to.
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -39,7 +45,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
           Expanded(
             flex: 5,
             //TODO: Arrumar funções de acionamento
-            //TODO: CRUD ZONA
             //TODO: REESTRURAR CARD ZONA
             //TODO: LISTAR HISTÓRICO
             child: StreamBuilder<QuerySnapshot>(
@@ -80,6 +85,14 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                         );
                       });
                 }),
+          ),
+          Expanded(
+            child: TextButton(
+              child: const Text('opa'),
+              onPressed: () {
+                IoTController.to.umidadeAr.value += 10;
+              },
+            ),
           ),
           Expanded(
             flex: 2,

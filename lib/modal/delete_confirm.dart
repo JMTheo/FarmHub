@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../components/toast_util.dart';
 import '../controller/db_controller.dart';
-import '../enums/ToastOptions.dart';
+import '../enums/toast_option.dart';
 
 getModalConfirmDelete(context, String id, AppScreens screen) {
   String identifier = '';

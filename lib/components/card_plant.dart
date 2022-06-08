@@ -1,4 +1,4 @@
-import 'package:automacao_horta/enums/FarmTypeOperation.dart';
+import 'package:automacao_horta/enums/farm_type_operation.dart';
 import 'package:automacao_horta/enums/app_screens.dart';
 import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -92,7 +92,6 @@ class _CardPlantState extends State<CardPlant> {
                 content: FontAwesomeIcons.droplet,
                 onTap: widget.functionA,
               ),
-              //TODO: Acrescentar modal de confirmação
               MiniCard(
                 content: FontAwesomeIcons.trash,
                 onTap: () {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../constants.dart';
-import '../enums/ToastOptions.dart';
+import '../enums/toast_option.dart';
 
 class ToastUtil {
   ToastUtil({required this.text, required this.type});

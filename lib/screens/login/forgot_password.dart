@@ -78,7 +78,7 @@ class _ForgotPassWordPageState extends State<ForgotPassWordPage> {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => AuthPage()));
+                            builder: (context) => const AuthPage()));
                       },
                       child: const Text(
                         'Entrar',

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../constants.dart';
-import '../enums/FarmTypeOperation.dart';
+import '../enums/farm_type_operation.dart';
 
 import '../controller/db_controller.dart';
 import '../services/auth_service.dart';

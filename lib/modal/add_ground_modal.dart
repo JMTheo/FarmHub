@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../enums/FarmTypeOperation.dart';
+import '../enums/farm_type_operation.dart';
 
 import '../components/outline_text_form.dart';
 import '../controller/db_controller.dart';

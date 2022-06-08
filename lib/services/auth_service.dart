@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../controller/db_controller.dart';
 
 import '../components/toast_util.dart';
-import '../enums/ToastOptions.dart';
+import '../enums/toast_option.dart';
 import '../model/user_data.dart';
 
 class AuthService extends GetxController {

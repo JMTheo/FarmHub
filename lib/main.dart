@@ -10,13 +10,15 @@ import 'constants.dart';
 
 Future<void> main() async {
   await initConfig();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 //cor verdinha 0xFF35CE8D | bariol
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   // TODO: Acrescentar a fonte bariol
   @override
   Widget build(BuildContext context) {

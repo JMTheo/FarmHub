@@ -22,7 +22,7 @@ class MainPage extends StatelessWidget {
           } else if (snapshot.hasData) {
             return const VerifyEmailPage();
           } else {
-            return AuthPage();
+            return const AuthPage();
           }
         },
       ),

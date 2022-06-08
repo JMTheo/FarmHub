@@ -1,7 +1,8 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -36,11 +37,10 @@ class IoTController extends GetxController {
   late StreamSubscription subscription;
 
   //Função a ser executada
-  atualizarDados(int umi, int umiS, double temp, int luz) {
+  atualizarDados(int umi, int umiS, double temp) {
     umidadeAr.value = umi;
     umidadeSolo.value = umiS;
     temperatura.value = temp;
-    luminosidade.value = luz;
   }
 
   mudarEstadoLampada() {
@@ -68,6 +68,8 @@ class IoTController extends GetxController {
         });
     enviarMensagem('a');
   }
+
+  void getDataFromSensors() {}
 
   void enviarMensagem(String msg) {
     final builder = MqttClientPayloadBuilder();
@@ -121,9 +123,8 @@ class IoTController extends GetxController {
       int tempUmidadeAr = parsed['umi'];
       double tempTemperatura = parsed['temp'];
       int tempUmidadeSolo = parsed['umi_s'];
-      int tempLuminosidade = parsed['luz'];
-      atualizarDados(
-          tempUmidadeAr, tempUmidadeSolo, tempTemperatura, tempLuminosidade);
+
+      atualizarDados(tempUmidadeAr, tempUmidadeSolo, tempTemperatura);
 
       print('umi: ${parsed['umi']}');
     });
