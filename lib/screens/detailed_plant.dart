@@ -1,3 +1,5 @@
+import 'package:automacao_horta/constants.dart';
+import 'package:automacao_horta/controller/db_controller.dart';
 import 'package:automacao_horta/enums/farm_type_operation.dart';
 import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -61,7 +63,14 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                   }
 
                   if (snapshot.data!.docs.isEmpty) {
-                    return const Text('Não há ZONAS cadastradas ao seu perfil');
+                    return const Center(
+                        child: Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Não há ZONAS cadastradas ao seu perfil',
+                        style: kTitle,
+                      ),
+                    ));
                   }
 
                   return ListView.builder(
@@ -71,6 +80,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                         final DocumentSnapshot docSnap =
                             snapshot.data!.docs[index];
                         //TODO: Ajustar para pegar dados de histórico
+                        //
                         // List<GenericSensor> tempList = (docSnap['temperature']
                         //         as List)
                         //     .map((itemTemp) => GenericSensor.fromJson(itemTemp))
@@ -109,16 +119,21 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
               ],
             ),
           ),
-          BottomButton(
-            //TODO: AJUSTAR NOME DO BOTÃO (ASSEMBLEIA)
-            buttonTitle: 'Adicionar Região',
-            onTap: () async {
-              await addGroundModal('Adicionar Região', context,
-                  FarmTypeOperation.create, widget.farmID);
-            },
-          ),
+          DBController.to.ownerFarmsIDs.contains(widget.farmID)
+              ? showBottomButton()
+              : const SizedBox.shrink(),
         ],
       ),
+    );
+  }
+
+  Widget showBottomButton() {
+    return BottomButton(
+      buttonTitle: 'Adicionar Região',
+      onTap: () async {
+        await addGroundModal('Adicionar Região', context,
+            FarmTypeOperation.create, widget.farmID);
+      },
     );
   }
 }
