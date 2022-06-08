@@ -1,5 +1,14 @@
 import 'package:flutter/material.dart';
 
+//List of ground types
+//TODO: Validar nomes possíveis
+const List<String> kTypesGreenery = [
+  'Fruta',
+  'Vegetal',
+  'Berry',
+  'Grão',
+];
+
 const TextStyle kTitle = TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 40.0,

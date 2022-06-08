@@ -15,14 +15,17 @@ import '../model/farm.dart';
 import '../model/ground.dart';
 
 class DBController extends GetxController {
-  Rx<UserData> userData =
-      UserData(name: '', surname: '', cpf: '', email: '').obs;
+  Rx<UserData> userData = UserData(name: '', surname: '', cpf: '', email: '')
+      .obs; //Guarda os dados do usuário logado
   RxList sharedFarmsIDs = [].obs; //Ids das fazendas compartilhadas
   RxList ownerFarmsIDs = [].obs; //Ids das fazendas onde o usuário é dono
   RxList usersInFarm =
       [].obs; //Ids contendo todos os que possuem acesso em determinada fazenda
-  RxList<String> selectedUsersList = [''].obs; //Lista
-  RxList<SelectedListItem> allUsersList = [SelectedListItem(false, '')].obs;
+  RxList<String> selectedUsersList = [
+    ''
+  ].obs; //Lista de usuários disponíveis para serem selecionados no widget de edição de fazenda
+  RxList<SelectedListItem> allUsersList = [SelectedListItem(false, '')]
+      .obs; //Lista de usuários selecionados pelo widget de edição
 
   final FirebaseFirestore _db = DBFirestore.get();
 

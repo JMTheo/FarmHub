@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:get/get.dart';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:bot_toast/bot_toast.dart';

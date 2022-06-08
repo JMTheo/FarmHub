@@ -1,7 +1,8 @@
-import 'package:automacao_horta/components/section_card.dart';
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+
+import './section_card.dart';
 
 class BottomCard extends StatelessWidget {
   const BottomCard({Key? key, required this.titulo, required this.valor})

@@ -115,7 +115,7 @@ void onTextFieldTap(context, TextEditingController userControllerTXT) {
     DropDown(
       submitButtonText: 'Confirmar seleção',
       submitButtonColor: kDefaultColorGreen,
-      searchHintText: 'Procurando...',
+      searchHintText: 'Digite o email do usuário',
       bottomSheetTitle: 'Usuários',
       searchBackgroundColor: Colors.black12,
       dataList: DBController.to.allUsersList,
@@ -125,17 +125,7 @@ void onTextFieldTap(context, TextEditingController userControllerTXT) {
         for (var element in selectedList) {
           DBController.to.selectedUsersList.add(element);
         }
-
-        print('SELECIONADOS: ${DBController.to.selectedUsersList}');
       },
     ),
   ).showModal(context);
-}
-
-void showSnackBar(String message, context) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      content: Text(message),
-    ),
-  );
 }

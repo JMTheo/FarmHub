@@ -55,6 +55,8 @@ class _CardPlantState extends State<CardPlant> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          //TODO: COLOCAR UMA IMG DEFAULT DE ACORDO COM O TIPO
+          //
           // Center(
           //   child: Padding(
           //     padding: const EdgeInsets.only(top: 8.0),
