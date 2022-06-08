@@ -53,10 +53,10 @@ class IoTController extends GetxController {
       msg['action'] = 'dj';
     }
 
-    enviarMensagem(jsonEncode(msg));
+    sendMessage(jsonEncode(msg));
   }
 
-  acionarAgua() {
+  acionarAgua(String farmID) {
     BotToast.showLoading(
         duration: const Duration(seconds: 1),
         onClose: () {
@@ -66,12 +66,16 @@ class IoTController extends GetxController {
               animationDuration: const Duration(seconds: 1),
               textStyle: const TextStyle(fontSize: 25.0));
         });
-    enviarMensagem('a');
+    Map<String, String> msg = {'action': 'activeWater', 'farm': farmID};
+    sendMessage(jsonEncode(msg));
   }
 
-  void getDataFromSensors() {}
+  void getDataFromSensors(String farmID) {
+    Map<String, String> msg = {'action': 'getAllSensor', 'farm': farmID};
+    sendMessage(jsonEncode(msg));
+  }
 
-  void enviarMensagem(String msg) {
+  void sendMessage(String msg) {
     final builder = MqttClientPayloadBuilder();
     builder.addString(msg);
     print('Enviando:: <<<< $msg >>>>');
