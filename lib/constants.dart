@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const List<String> kTypesGreenery = [
   'Fruta',
   'Vegetal',
-  'Berry',
+  'Hortaliça',
   'Grão',
 ];
 

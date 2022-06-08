@@ -120,11 +120,13 @@ class DBController extends GetxController {
   }
 
   Future<void> getUsersAccessFarm(String farmID) async {
-    var docSnapshot = await _db.collection('farm').doc(farmID).get();
-    if (docSnapshot.exists) {
-      Map<String, dynamic>? data = docSnapshot.data();
-      List<dynamic> users = data?['canAccess'];
-      usersInFarm.value = users;
+    if (farmID.isNotEmpty) {
+      var docSnapshot = await _db.collection('farm').doc(farmID).get();
+      if (docSnapshot.exists) {
+        Map<String, dynamic>? data = docSnapshot.data();
+        List<dynamic> users = data?['canAccess'];
+        usersInFarm.value = users;
+      }
     }
   }
 

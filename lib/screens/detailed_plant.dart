@@ -90,6 +90,7 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                         //     .toList();
                         //print(tempList.toString());
                         return CardPlant(
+                          type: docSnap['type'],
                           specie: docSnap['specie'],
                           region: docSnap['region'],
                           umidadeDoSolo: 10,

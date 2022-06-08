@@ -92,7 +92,7 @@ addGroundModal(
 
                   final String region = regionController.text.trim();
                   final String specie = specieController.text.trim();
-                  final String type = typeController.text.trim().toLowerCase();
+                  final String type = typeController.text.trim();
 
                   Ground ground = Ground(
                       farm: '', type: type, region: region, specie: specie);

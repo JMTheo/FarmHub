@@ -15,13 +15,13 @@ import './mini_card.dart';
 class CardPlant extends StatefulWidget {
   CardPlant({
     Key? key,
-    this.urlImg,
     this.estadoLampada,
     this.umidadeDoSolo,
     this.functionA,
     this.functionL,
     this.groundObj,
     required this.id,
+    required this.type,
     required this.specie,
     required this.region,
   }) : super(key: key);
@@ -32,7 +32,7 @@ class CardPlant extends StatefulWidget {
   final String region;
   final VoidCallback? functionL;
   final VoidCallback? functionA;
-  final String? urlImg;
+  final String type;
   int? umidadeDoSolo;
   bool? estadoLampada;
 
@@ -68,6 +68,7 @@ class _CardPlantState extends State<CardPlant> {
           //     ),
           //   ),
           // ),
+          Center(child: FaIcon(getIconByType(widget.type), size: 150.0)),
           const SizedBox(height: 80.0),
           Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 5, 0, 0),
@@ -114,5 +115,25 @@ class _CardPlantState extends State<CardPlant> {
         ],
       ),
     );
+  }
+
+  IconData getIconByType(String type) {
+    IconData icon = FontAwesomeIcons.leaf;
+    switch (type) {
+      case 'Fruta':
+        icon = FontAwesomeIcons.appleWhole;
+        break;
+      case 'Vegetal':
+        icon = FontAwesomeIcons.carrot;
+        break;
+      case 'Hortaliça':
+        icon = FontAwesomeIcons.seedling;
+        break;
+      case 'Grão':
+        icon = FontAwesomeIcons.wheatAwn;
+        break;
+    }
+
+    return icon;
   }
 }

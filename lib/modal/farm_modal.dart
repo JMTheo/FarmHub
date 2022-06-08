@@ -20,15 +20,16 @@ getFarmModal(context, FarmTypeOperation type, String title,
   TextEditingController userController = TextEditingController();
   final String buttonText =
       type == FarmTypeOperation.create ? 'Criar fazenda' : 'Atualizar fazenda';
+
+  DBController.to.getAllUser();
+
   if (documentSnapshot != null) {
     nameController.text = documentSnapshot['name'];
     userController.text = documentSnapshot['canAccess'].join(',');
+    DBController.to.getUsersAccessFarm(documentSnapshot.id);
   } else {
     userController.text = '${DBController.to.userData.value.email!},';
   }
-
-  DBController.to.getAllUser();
-  DBController.to.getUsersAccessFarm(documentSnapshot!.id);
 
   return showModalBottomSheet(
     isScrollControlled: true,
@@ -88,7 +89,7 @@ getFarmModal(context, FarmTypeOperation type, String title,
                     fullName:
                         '${DBController.to.userData.value.name} ${DBController.to.userData.value.surname}');
 
-                farm.id = documentSnapshot.id;
+                farm.id = documentSnapshot?.id;
 
                 if (type == FarmTypeOperation.create) {
                   DBController.to.addFarm(farm);
@@ -125,6 +126,7 @@ void onTextFieldTap(context, TextEditingController userControllerTXT) {
         for (var element in selectedList) {
           DBController.to.selectedUsersList.add(element);
         }
+        userControllerTXT.text = DBController.to.selectedUsersList.toString();
       },
     ),
   ).showModal(context);
