@@ -1,16 +1,19 @@
-import 'package:automacao_horta/constants.dart';
-import 'package:automacao_horta/controller/db_controller.dart';
-import 'package:automacao_horta/enums/farm_type_operation.dart';
-import 'package:automacao_horta/modal/add_ground_modal.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../enums/farm_type_operation.dart';
+
 import '../controller/iot_controller.dart';
+import '../controller/db_controller.dart';
+
+import '../modal/add_ground_modal.dart';
 
 import '../components/bottom_button.dart';
 import '../components/bottom_card.dart';
 import '../components/card_plant.dart';
+
+import '../constants.dart';
 
 class DetailedPlantPage extends StatefulWidget {
   final String farmID;
@@ -95,14 +98,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                         );
                       });
                 }),
-          ),
-          Expanded(
-            child: TextButton(
-              child: const Text('opa'),
-              onPressed: () {
-                IoTController.to.umidadeAr.value += 10;
-              },
-            ),
           ),
           Expanded(
             flex: 2,

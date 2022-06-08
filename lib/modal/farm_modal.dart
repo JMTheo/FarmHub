@@ -1,16 +1,18 @@
-import 'package:automacao_horta/constants.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+
+import '../constants.dart';
 
 import '../enums/farm_type_operation.dart';
 
-import '../components/outline_text_form.dart';
 import '../controller/db_controller.dart';
 
 import '../model/farm.dart';
+
+import '../components/outline_text_form.dart';
 
 getFarmModal(context, FarmTypeOperation type, String title,
     [DocumentSnapshot? documentSnapshot]) {

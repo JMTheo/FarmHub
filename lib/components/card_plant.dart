@@ -1,14 +1,16 @@
-import 'package:automacao_horta/enums/farm_type_operation.dart';
-import 'package:automacao_horta/enums/app_screens.dart';
-import 'package:automacao_horta/modal/add_ground_modal.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'package:automacao_horta/components/mini_card.dart';
-import 'package:automacao_horta/constants.dart';
+import '../constants.dart';
 
+import '../enums/farm_type_operation.dart';
+import '../enums/app_screens.dart';
+
+import '../modal/add_ground_modal.dart';
 import '../modal/delete_confirm.dart';
+
+import './mini_card.dart';
 
 class CardPlant extends StatefulWidget {
   CardPlant({

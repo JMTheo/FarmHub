@@ -1,14 +1,16 @@
-import 'package:automacao_horta/constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../constants.dart';
 
 import '../enums/farm_type_operation.dart';
 
-import '../components/outline_text_form.dart';
 import '../controller/db_controller.dart';
 
 import '../model/ground.dart';
+
+import '../components/outline_text_form.dart';
 
 addGroundModal(
     String title, context, FarmTypeOperation typeOperation, String? farmID,

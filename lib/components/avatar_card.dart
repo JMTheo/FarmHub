@@ -1,8 +1,9 @@
-import 'package:automacao_horta/components/section_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../controller/db_controller.dart';
+
+import './section_card.dart';
 
 class AvatarCard extends StatelessWidget {
   const AvatarCard({Key? key}) : super(key: key);
