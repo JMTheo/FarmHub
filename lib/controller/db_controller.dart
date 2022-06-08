@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:drop_down_list/drop_down_list.dart';
 import 'package:get/get.dart';
 
 import '../components/toast_util.dart';
@@ -16,9 +17,12 @@ import '../model/ground.dart';
 class DBController extends GetxController {
   Rx<UserData> userData =
       UserData(name: '', surname: '', cpf: '', email: '').obs;
-  RxList sharedFarmsIDs = [].obs;
-  RxList ownerFarmsIDs = [].obs;
-  RxList usersList = [].obs;
+  RxList sharedFarmsIDs = [].obs; //Ids das fazendas compartilhadas
+  RxList ownerFarmsIDs = [].obs; //Ids das fazendas onde o usuário é dono
+  RxList usersInFarm =
+      [].obs; //Ids contendo todos os que possuem acesso em determinada fazenda
+  RxList<String> selectedUsersList = [''].obs; //Lista
+  RxList<SelectedListItem> allUsersList = [SelectedListItem(false, '')].obs;
 
   final FirebaseFirestore _db = DBFirestore.get();
 
@@ -95,17 +99,6 @@ class DBController extends GetxController {
             }));
   }
 
-  Future getOwnerData(String email) async {
-    await _db
-        .collection('users')
-        .where('email', isEqualTo: email)
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((document) {
-              UserData userObj = UserData.fromJson(document.data());
-              usersList.addIf(!usersList.contains(userObj), userObj);
-            }));
-  }
-
   Future getAllOwnerFarms(String email) async {
     await _db
         .collection('farm')
@@ -121,6 +114,15 @@ class DBController extends GetxController {
   eraseDataOnLogout() {
     ownerFarmsIDs.clear();
     sharedFarmsIDs.clear();
+  }
+
+  Future<void> getUsersAccessFarm(String farmID) async {
+    var docSnapshot = await _db.collection('farm').doc(farmID).get();
+    if (docSnapshot.exists) {
+      Map<String, dynamic>? data = docSnapshot.data();
+      List<dynamic> users = data?['canAccess'];
+      usersInFarm.value = users;
+    }
   }
 
   Future<void> deleteFarm(String farmID) async {
@@ -147,5 +149,25 @@ class DBController extends GetxController {
       text: 'Sucesso ao deletar campo!',
       type: ToastOption.success,
     ).getToast();
+  }
+
+  Future getAllUser() async {
+    allUsersList.clear();
+    selectedUsersList.clear();
+    await _db
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              setToListShared(document['email']);
+            }));
+  }
+
+  setToListShared(String email) {
+    bool selected = usersInFarm.contains(email);
+
+    SelectedListItem user = SelectedListItem(selected, email);
+    if (!allUsersList.any((element) => element.name == email)) {
+      allUsersList.add(user);
+    }
   }
 }

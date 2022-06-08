@@ -77,7 +77,9 @@ class _RegisterPageState extends State<RegisterPage> {
                               : null,
                         ),
                       ),
-                      kSpaceBox,
+                      const SizedBox(
+                        width: 30,
+                      ),
                       Expanded(
                         child: OutlineTextForm(
                           hintTxt: 'Sobrenome',

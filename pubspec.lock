@@ -130,9 +130,9 @@ packages:
   drop_down_list:
     dependency: "direct main"
     description:
-      name: drop_down_list
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "local/drop_down_list-main"
+      relative: true
+    source: path
     version: "0.0.2"
   event_bus:
     dependency: transitive

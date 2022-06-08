@@ -6,6 +6,7 @@ class OutlineTextForm extends StatelessWidget {
     required this.hintTxt,
     required this.iconData,
     required this.hideText,
+    this.onClick,
     this.validator,
     this.txtController,
     this.autoValidateMode,
@@ -14,6 +15,7 @@ class OutlineTextForm extends StatelessWidget {
     this.inputFormat,
   });
 
+  final VoidCallback? onClick;
   final bool hideText;
   final String hintTxt;
   final IconData iconData;
@@ -28,6 +30,7 @@ class OutlineTextForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: txtController,
+      onTap: onClick,
       validator: validator,
       obscureText: hideText,
       keyboardType: keyType,

@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
                                             child: Row(children: <Widget>[
                                               IconButton(
                                                 onPressed: () async {
-                                                  await getModal(
+                                                  await getFarmModal(
                                                       context,
                                                       FarmTypeOperation.update,
                                                       'Editar fazenda',
@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: kDefaultColorGreen,
-          onPressed: () async => await getModal(
+          onPressed: () async => await getFarmModal(
               context, FarmTypeOperation.create, 'Adicionar fazenda'),
           child: const Icon(Icons.add),
         ),
