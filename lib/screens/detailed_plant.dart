@@ -31,7 +31,7 @@ class DetailedPlantPage extends StatefulWidget {
 class _DetailedPlantPageState extends State<DetailedPlantPage> {
   @override
   void initState() {
-    //IoTController.to.
+    IoTController.to.connect();
     super.initState();
   }
 
@@ -100,6 +100,11 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                       });
                 }),
           ),
+          TextButton(
+              onPressed: () {
+                IoTController.to.mudarEstadoLampada();
+              },
+              child: const Text('click')),
           Expanded(
             flex: 2,
             child: Row(

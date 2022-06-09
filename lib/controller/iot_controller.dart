@@ -20,15 +20,9 @@ class IoTController extends GetxController {
   //GetX
   static IoTController get to => Get.find<IoTController>();
 
-  @override
-  void init() {
-    super.onInit();
-    _connect();
-  }
-
   //Variaveis para se conectar ao broker
-  String broker = '192.168.3.11';
-  int port = 3000;
+  String broker = '143.244.165.124';
+  int port = 3030;
   String clientIdentifier = 'mobile';
   String topic = 'iot/farm';
 
@@ -85,10 +79,12 @@ class IoTController extends GetxController {
   /*
     Conecta no servidor MQTT à partir dos dados configurados nos atributos desta classe (broker, port, etc...)
   */
-  void _connect() async {
+  void connect() async {
     String? deviceId = await _getIdDevice();
     client = MqttServerClient(broker, '');
     client.port = port;
+    //client.secure = true;
+    //client.useWebSocket = true;
     client.keepAlivePeriod = 30;
     client.onDisconnected = _onDisconnected;
     client.onSubscribed = subscribeToTopic;
