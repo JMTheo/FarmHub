@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../enums/farm_type_operation.dart';
@@ -43,6 +46,13 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
         title: Center(
           child: Text('Fazenda - ${widget.name}'),
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                IoTController.to.getDataFromSensors();
+              },
+              icon: const FaIcon(FontAwesomeIcons.rotate)),
+        ],
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

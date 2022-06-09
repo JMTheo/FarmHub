@@ -70,8 +70,8 @@ class IoTController extends GetxController {
     sendMessage(jsonEncode(msg));
   }
 
-  void getDataFromSensors(String farmID) {
-    Map<String, String> msg = {'action': 'getAllSensor', 'farm': farmID};
+  void getDataFromSensors() {
+    Map<String, String> msg = {'action': 'getAllSensor'}; //, 'farm': farmID
     sendMessage(jsonEncode(msg));
   }
 
@@ -132,13 +132,15 @@ class IoTController extends GetxController {
           MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
 
       dynamic parsed = json.decode(pt);
-      int tempUmidadeAr = parsed['umi'];
-      double tempTemperatura = parsed['temp'];
-      int tempUmidadeSolo = parsed['umi_s'];
+      if (parsed['umi'] != Null) {
+        int tempUmidadeAr = parsed['umi'];
+        double tempTemperatura = parsed['temp'];
+        int tempUmidadeSolo = parsed['umi_s'];
 
-      atualizarDados(tempUmidadeAr, tempUmidadeSolo, tempTemperatura);
+        atualizarDados(tempUmidadeAr, tempUmidadeSolo, tempTemperatura);
 
-      print('umi: ${parsed['umi']}');
+        print('umi: ${parsed['umi']}');
+      }
     });
   }
 

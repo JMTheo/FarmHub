@@ -24,10 +24,10 @@ getWaterModal(context, String farmID) {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('Adicione o tempo', style: kHighTitle),
+            const Text('Irrigação', style: kHighTitle),
             kSpaceBox,
             OutlineTextForm(
-              hintTxt: 'Digite em segundos a quantidade desejada',
+              hintTxt: 'Digite o tempo em segundos',
               iconData: FontAwesomeIcons.faucetDrip,
               hideText: false,
               keyType: TextInputType.number,
