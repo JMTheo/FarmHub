@@ -4,11 +4,12 @@ import '../constants.dart';
 
 class CustomElevetedButton extends StatelessWidget {
   const CustomElevetedButton(
-      {Key? key, required this.onTap, required this.btnLabel})
+      {Key? key, required this.onTap, required this.btnLabel, this.btnColor})
       : super(key: key);
 
   final VoidCallback onTap;
   final String btnLabel;
+  final Color? btnColor;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CustomElevetedButton extends StatelessWidget {
       onPressed: onTap,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
-        primary: kDefaultColorGreen,
+        primary: btnColor ?? kDefaultColorGreen,
         onPrimary: Colors.black,
       ),
       child: Text(
