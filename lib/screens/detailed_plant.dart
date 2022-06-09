@@ -1,4 +1,3 @@
-import 'package:automacao_horta/screens/schedule_water_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +7,7 @@ import '../enums/farm_type_operation.dart';
 import '../controller/iot_controller.dart';
 import '../controller/db_controller.dart';
 
+import '../modal/activate_water.dart';
 import '../modal/add_ground_modal.dart';
 
 import '../components/bottom_button.dart';
@@ -98,9 +98,13 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                           id: docSnap.id,
                           groundObj: docSnap,
                           waterFunc: () {
-                            Get.to(() => ScheduleWaterPage(
-                                  ground: docSnap['region'],
-                                ));
+                            getWaterModal(context, docSnap.id);
+                            // Get.to(() => ScheduleWaterPage(
+                            //       ground: docSnap['region'],
+                            //       id: docSnap.id,
+                            //       stream:
+                            //           DBController.to.getSchedules(docSnap.id),
+                            //     ));
                           },
                         );
                       });

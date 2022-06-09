@@ -79,50 +79,51 @@ class _HomePageState extends State<HomePage> {
                         itemBuilder: (context, index) {
                           final DocumentSnapshot docSnap =
                               snapshot.data!.docs[index];
-                          return Obx(() => GestureDetector(
-                                onTap: () => {
-                                  Get.to(() => DetailedPlantPage(
-                                        farmID: docSnap.id,
-                                        name: docSnap['name'],
-                                        stream: DBController.to
-                                            .getGrounds(docSnap.id),
-                                      ))
-                                },
-                                child: Card(
-                                  margin: const EdgeInsets.all(10.0),
-                                  child: ListTile(
-                                    title: Text(docSnap['name']),
-                                    subtitle:
-                                        Text('Dono: ${docSnap['fullName']}'),
-                                    trailing: DBController.to.ownerFarmsIDs
-                                            .contains(docSnap.id)
-                                        ? SizedBox(
-                                            width: 100.0,
-                                            child: Row(children: <Widget>[
-                                              IconButton(
-                                                onPressed: () async {
-                                                  await getFarmModal(
-                                                      context,
-                                                      FarmTypeOperation.update,
-                                                      'Editar fazenda',
-                                                      docSnap);
-                                                },
-                                                icon: const Icon(Icons.edit),
-                                              ),
-                                              IconButton(
-                                                  icon:
-                                                      const Icon(Icons.delete),
-                                                  onPressed: () =>
-                                                      getModalConfirmDelete(
-                                                          context,
-                                                          docSnap.id,
-                                                          AppScreens.farm)),
-                                            ]),
-                                          )
-                                        : const SizedBox.shrink(),
-                                  ),
+                          return Obx(
+                            () => GestureDetector(
+                              onTap: () => {
+                                Get.to(() => DetailedPlantPage(
+                                      farmID: docSnap.id,
+                                      name: docSnap['name'],
+                                      stream: DBController.to
+                                          .getGrounds(docSnap.id),
+                                    ))
+                              },
+                              child: Card(
+                                margin: const EdgeInsets.all(10.0),
+                                child: ListTile(
+                                  title: Text(docSnap['name']),
+                                  subtitle:
+                                      Text('Dono: ${docSnap['fullName']}'),
+                                  trailing: DBController.to.ownerFarmsIDs
+                                          .contains(docSnap.id)
+                                      ? SizedBox(
+                                          width: 100.0,
+                                          child: Row(children: <Widget>[
+                                            IconButton(
+                                              onPressed: () async {
+                                                await getFarmModal(
+                                                    context,
+                                                    FarmTypeOperation.update,
+                                                    'Editar fazenda',
+                                                    docSnap);
+                                              },
+                                              icon: const Icon(Icons.edit),
+                                            ),
+                                            IconButton(
+                                                icon: const Icon(Icons.delete),
+                                                onPressed: () =>
+                                                    getModalConfirmDelete(
+                                                        context,
+                                                        docSnap.id,
+                                                        AppScreens.farm)),
+                                          ]),
+                                        )
+                                      : const SizedBox.shrink(),
                                 ),
-                              ));
+                              ),
+                            ),
+                          );
                         });
                   }),
             ),

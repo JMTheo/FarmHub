@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:automacao_horta/model/schedule.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:get/get.dart';
@@ -15,37 +16,40 @@ import '../model/farm.dart';
 import '../model/ground.dart';
 
 class DBController extends GetxController {
-  Rx<UserData> userData = UserData(name: '', surname: '', cpf: '', email: '')
-      .obs; //Guarda os dados do usuário logado
-  RxList sharedFarmsIDs = [].obs; //Ids das fazendas compartilhadas
-  RxList ownerFarmsIDs = [].obs; //Ids das fazendas onde o usuário é dono
-  RxList usersInFarm =
-      [].obs; //Ids contendo todos os que possuem acesso em determinada fazenda
-  RxList<String> selectedUsersList = [
-    ''
-  ].obs; //Lista de usuários disponíveis para serem selecionados no widget de edição de fazenda
-  RxList<SelectedListItem> allUsersList = [SelectedListItem(false, '')]
-      .obs; //Lista de usuários selecionados pelo widget de edição
+  //Guarda os dados do usuário logado
+  Rx<UserData> userData =
+      UserData(name: '', surname: '', cpf: '', email: '').obs;
+  //Ids das fazendas compartilhadas
+  RxList sharedFarmsIDs = [].obs;
+  //Ids das fazendas onde o usuário é dono
+  RxList ownerFarmsIDs = [].obs;
+  //Ids contendo todos os que possuem acesso em determinada fazenda
+  RxList usersInFarm = [].obs;
+  //Lista de usuários disponíveis para serem selecionados no widget de edição de fazenda
+  RxList<String> selectedUsersList = [''].obs;
+  //Lista de usuários selecionados pelo widget de edição
+  RxList<SelectedListItem> allUsersList = [SelectedListItem(false, '')].obs;
 
+  //Ref banco de dados
   final FirebaseFirestore _db = DBFirestore.get();
 
+  //Singleton
   static DBController get to => Get.find<DBController>();
 
+  //Usuário
   setUserDataLocal(Map<String, dynamic>? data) {
     userData.value = UserData.fromJson(data!);
   }
 
-  Future addUser(UserData userObj) async {
-    final json = userObj.toJson();
-
-    await _db.collection("users").add(json).then((DocumentReference doc) =>
-        print('DocumentSnapshot added with ID: ${doc.id}'));
-  }
-
-  Future addFarm(Farm farmObj) async {
-    final json = farmObj.toJson();
-    await _db.collection('farm').add(json);
-    await getAllOwnerFarms(farmObj.owner!);
+  Future getAllUser() async {
+    allUsersList.clear();
+    selectedUsersList.clear();
+    await _db
+        .collection('users')
+        .get()
+        .then((snapshot) => snapshot.docs.forEach((document) {
+              setToListShared(document['email']);
+            }));
   }
 
   Future getUserData(String uid) async {
@@ -64,6 +68,13 @@ class DBController extends GetxController {
             }));
   }
 
+  Future addUser(UserData userObj) async {
+    final json = userObj.toJson();
+
+    await _db.collection("users").add(json).then((DocumentReference doc) =>
+        print('DocumentSnapshot added with ID: ${doc.id}'));
+  }
+
   Stream<QuerySnapshot> getFarms(String email) {
     final Stream<QuerySnapshot> farm = _db
         .collection('farm')
@@ -72,17 +83,12 @@ class DBController extends GetxController {
     return farm;
   }
 
-  Stream<QuerySnapshot> getGrounds(String farmID) {
-    final Stream<QuerySnapshot> ground =
-        _db.collection('ground').where('farm', isEqualTo: farmID).snapshots();
-    return ground;
-  }
+  //Fazenda
 
-  Future<Stream<List<Ground>>> getAllGround() async {
-    final groundRef = _db.collection('ground');
-    var query = groundRef.snapshots().map((snapshot) =>
-        snapshot.docs.map((doc) => Ground.fromJson(doc.data())).toList());
-    return query;
+  Future addFarm(Farm farmObj) async {
+    final json = farmObj.toJson();
+    await _db.collection('farm').add(json);
+    await getAllOwnerFarms(farmObj.owner!);
   }
 
   Future updateFarm(Farm farmObj) async {
@@ -114,11 +120,6 @@ class DBController extends GetxController {
             }));
   }
 
-  eraseDataOnLogout() {
-    ownerFarmsIDs.clear();
-    sharedFarmsIDs.clear();
-  }
-
   Future<void> getUsersAccessFarm(String farmID) async {
     if (farmID.isNotEmpty) {
       var docSnapshot = await _db.collection('farm').doc(farmID).get();
@@ -136,6 +137,14 @@ class DBController extends GetxController {
       text: 'Sucesso ao deletar fazenda!',
       type: ToastOption.success,
     ).getToast();
+  }
+
+  //Região
+
+  Stream<QuerySnapshot> getGrounds(String farmID) {
+    final Stream<QuerySnapshot> ground =
+        _db.collection('ground').where('farm', isEqualTo: farmID).snapshots();
+    return ground;
   }
 
   Future addGround(Ground groundObj) async {
@@ -156,15 +165,36 @@ class DBController extends GetxController {
     ).getToast();
   }
 
-  Future getAllUser() async {
-    allUsersList.clear();
-    selectedUsersList.clear();
-    await _db
-        .collection('users')
-        .get()
-        .then((snapshot) => snapshot.docs.forEach((document) {
-              setToListShared(document['email']);
-            }));
+  //Schedule
+  Stream<QuerySnapshot> getSchedules(String groundID) {
+    final Stream<QuerySnapshot> schedule = _db
+        .collection('schedule')
+        .where('groundID', isEqualTo: groundID)
+        .snapshots();
+    return schedule;
+  }
+
+  Future addSchedule(Schedule scheduleObj) async {
+    final json = scheduleObj.toJson();
+    await _db.collection('schedule').add(json);
+  }
+
+  Future updateSchedule(Schedule scheduleObj) async {
+    final json = scheduleObj.toJson();
+    await _db.collection('schedule').doc(scheduleObj.id).update(json);
+  }
+
+  Future<void> deleteScheduled(String scheduleID) async {
+    await _db.collection('schedule').doc(scheduleID).delete();
+    ToastUtil(
+      text: 'Sucesso ao deletar agendamento!',
+      type: ToastOption.success,
+    ).getToast();
+  }
+
+  eraseDataOnLogout() {
+    ownerFarmsIDs.clear();
+    sharedFarmsIDs.clear();
   }
 
   setToListShared(String email) {

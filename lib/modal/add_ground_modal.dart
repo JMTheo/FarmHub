@@ -25,8 +25,8 @@ addGroundModal(
       : 'Atualizar região';
 
   if (documentSnapshot != null) {
-    regionController.text = documentSnapshot['specie'];
-    specieController.text = documentSnapshot['region'];
+    regionController.text = documentSnapshot['region'];
+    specieController.text = documentSnapshot['specie'];
     typeController.text = documentSnapshot['type'];
   }
 

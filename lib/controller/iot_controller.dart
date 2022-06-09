@@ -3,6 +3,8 @@ import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:automacao_horta/components/toast_util.dart';
+import 'package:automacao_horta/enums/toast_option.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:device_info_plus/device_info_plus.dart';
@@ -50,17 +52,21 @@ class IoTController extends GetxController {
     sendMessage(jsonEncode(msg));
   }
 
-  acionarAgua(String farmID) {
+  releaseWater(String farmID, int ms) {
     BotToast.showLoading(
         duration: const Duration(seconds: 1),
         onClose: () {
           BotToast.showText(
               text: 'Enviando sinal para acionar a água',
               align: const Alignment(0, 0),
-              animationDuration: const Duration(seconds: 1),
+              animationDuration: const Duration(seconds: 2),
               textStyle: const TextStyle(fontSize: 25.0));
         });
-    Map<String, String> msg = {'action': 'activeWater', 'farm': farmID};
+    Map<String, dynamic> msg = {
+      'action': 'activeWater',
+      'ms': ms,
+      'farm': farmID
+    };
     sendMessage(jsonEncode(msg));
   }
 
@@ -73,6 +79,12 @@ class IoTController extends GetxController {
     final builder = MqttClientPayloadBuilder();
     builder.addString(msg);
     print('Enviando:: <<<< $msg >>>>');
+    try {} on ConnectionException catch (e) {
+      print(e);
+      ToastUtil(
+          text: 'Erro ao enviar mensagem ao broker: $e',
+          type: ToastOption.error);
+    }
     client.publishMessage(topic, MqttQos.atLeastOnce, builder.payload!);
   }
 
@@ -88,8 +100,8 @@ class IoTController extends GetxController {
     client.keepAlivePeriod = 30;
     client.onDisconnected = _onDisconnected;
     client.onSubscribed = subscribeToTopic;
-    client.onAutoReconnect = _onAutoReconnect;
-    client.autoReconnect = true;
+    //client.onAutoReconnect = _onAutoReconnect;
+    //client.autoReconnect = true;
 
     final MqttConnectMessage connMess = MqttConnectMessage()
         .withClientIdentifier('$clientIdentifier - $deviceId')
