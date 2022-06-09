@@ -23,7 +23,7 @@ class BottomCard extends StatelessWidget {
             style: kNumbersTextStyle,
           ),
           const SizedBox(
-            height: 50,
+            height: 30,
           ),
           Text(
             titulo,

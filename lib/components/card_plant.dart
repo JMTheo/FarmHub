@@ -68,10 +68,13 @@ class _CardPlantState extends State<CardPlant> {
           //     ),
           //   ),
           // ),
-          Center(child: FaIcon(getIconByType(widget.type), size: 150.0)),
-          const SizedBox(height: 80.0),
+          Center(
+              child: Container(
+                  margin: const EdgeInsets.only(top: 60),
+                  child: FaIcon(getIconByType(widget.type), size: 100.0))),
+          const SizedBox(height: 40.0),
           Padding(
-            padding: const EdgeInsets.fromLTRB(20.0, 5, 0, 0),
+            padding: const EdgeInsets.fromLTRB(20.0, 0, 0, 0),
             child: Text(
               widget.region,
               style: kSubTitle,
