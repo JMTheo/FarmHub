@@ -1,3 +1,4 @@
+import 'package:automacao_horta/screens/schedule_water_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -96,6 +97,11 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                           umidadeDoSolo: 10,
                           id: docSnap.id,
                           groundObj: docSnap,
+                          waterFunc: () {
+                            Get.to(() => ScheduleWaterPage(
+                                  ground: docSnap['region'],
+                                ));
+                          },
                         );
                       });
                 }),
