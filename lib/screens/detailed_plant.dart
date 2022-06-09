@@ -1,3 +1,4 @@
+import 'package:automacao_horta/screens/schedule_water_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,7 +32,7 @@ class DetailedPlantPage extends StatefulWidget {
 class _DetailedPlantPageState extends State<DetailedPlantPage> {
   @override
   void initState() {
-    //IoTController.to.
+    IoTController.to.connect();
     super.initState();
   }
 
@@ -96,10 +97,20 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                           umidadeDoSolo: 10,
                           id: docSnap.id,
                           groundObj: docSnap,
+                          waterFunc: () {
+                            Get.to(() => ScheduleWaterPage(
+                                  ground: docSnap['region'],
+                                ));
+                          },
                         );
                       });
                 }),
           ),
+          TextButton(
+              onPressed: () {
+                IoTController.to.mudarEstadoLampada();
+              },
+              child: const Text('click')),
           Expanded(
             flex: 2,
             child: Row(

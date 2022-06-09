@@ -17,7 +17,7 @@ class CardPlant extends StatefulWidget {
     Key? key,
     this.estadoLampada,
     this.umidadeDoSolo,
-    this.functionA,
+    this.waterFunc,
     this.functionL,
     this.groundObj,
     required this.id,
@@ -31,7 +31,7 @@ class CardPlant extends StatefulWidget {
   final String specie;
   final String region;
   final VoidCallback? functionL;
-  final VoidCallback? functionA;
+  final VoidCallback? waterFunc;
   final String type;
   int? umidadeDoSolo;
   bool? estadoLampada;
@@ -98,7 +98,7 @@ class _CardPlantState extends State<CardPlant> {
               ), //Dado sensor de umidade de solo
               MiniCard(
                 content: FontAwesomeIcons.droplet,
-                onTap: widget.functionA,
+                onTap: widget.waterFunc,
               ),
               MiniCard(
                 content: Icons.edit,
