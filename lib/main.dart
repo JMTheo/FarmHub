@@ -27,11 +27,13 @@ class MyApp extends StatelessWidget {
       builder: BotToastInit(), //1. call BotToastInit
       navigatorObservers: [BotToastNavigatorObserver()],
       theme: ThemeData.dark().copyWith(
+        useMaterial3: true,
         appBarTheme: const AppBarTheme(
           color: kScaffoldBGColor,
         ),
-        colorScheme:
-            const ColorScheme.dark().copyWith(primary: kDefaultColorGreen),
+        colorScheme: const ColorScheme.dark().copyWith(
+          primary: kDefaultColorGreen,
+        ),
         hintColor: Colors.white,
         scaffoldBackgroundColor: kScaffoldBGColor,
       ),

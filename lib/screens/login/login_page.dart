@@ -42,6 +42,12 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
+            Image.asset(
+              "assets/img/logo_fundo.png",
+              height: 100,
+              width: 100,
+            ),
+            kSpaceBox,
             const Text(
               'FarmHub',
               style: TextStyle(

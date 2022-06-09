@@ -155,6 +155,7 @@ class _MainBodyState extends State<MainBody> {
                           style: ElevatedButton.styleFrom(
                             primary: widget.dropDown.submitButtonColor ??
                                 Colors.blue,
+                            onPrimary: Colors.black,
                             textStyle: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.bold,

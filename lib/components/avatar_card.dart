@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import '../controller/db_controller.dart';
@@ -16,10 +17,9 @@ class AvatarCard extends StatelessWidget {
         SectionCard(
           childWidget: Center(
             child: ListTile(
-              leading: const CircleAvatar(
-                radius: 25.0,
-                backgroundColor: Colors.white,
-                backgroundImage: AssetImage("assets/img/fruits/apple.png"),
+              leading: const FaIcon(
+                FontAwesomeIcons.user,
+                size: 40.0,
               ),
               title: Obx(() => Text(
                     "${DBController.to.userData.value.name.toString()} ${DBController.to.userData.value.surname.toString()}",

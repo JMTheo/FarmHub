@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class CustomElevetedButton extends StatelessWidget {
-  CustomElevetedButton({Key? key, required this.onTap, required this.btnLabel})
+  const CustomElevetedButton(
+      {Key? key, required this.onTap, required this.btnLabel})
       : super(key: key);
 
   final VoidCallback onTap;
@@ -16,6 +17,7 @@ class CustomElevetedButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.fromLTRB(40, 15, 40, 15),
         primary: kDefaultColorGreen,
+        onPrimary: Colors.black,
       ),
       child: Text(
         btnLabel,

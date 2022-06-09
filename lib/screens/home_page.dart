@@ -2,6 +2,7 @@ import 'package:automacao_horta/enums/app_screens.dart';
 import 'package:automacao_horta/modal/delete_confirm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../constants.dart';
@@ -35,7 +36,7 @@ class _HomePageState extends State<HomePage> {
                   AuthService.to.logout();
                   //Get.to(() => const ProfilePage());
                 },
-                icon: const Icon(Icons.person)),
+                icon: const FaIcon(FontAwesomeIcons.arrowRightFromBracket)),
           ],
         ),
         body: Column(
