@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 
 import '../../model/user_data.dart';
@@ -97,12 +98,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   kSpaceBox,
                   OutlineTextForm(
                     hintTxt: 'Digite o seu cpf',
-                    iconData: Icons.person,
+                    iconData: FontAwesomeIcons.addressCard,
                     hideText: false,
                     txtController: cpfController,
                     keyType: TextInputType.number,
                     inputFormat: <TextInputFormatter>[
-                      FilteringTextInputFormatter.digitsOnly
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(11)
                     ],
                     textInputAction: TextInputAction.next,
                     autoValidateMode: AutovalidateMode.onUserInteraction,

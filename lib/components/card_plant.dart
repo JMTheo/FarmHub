@@ -98,16 +98,16 @@ class _CardPlantState extends State<CardPlant> {
                 onTap: widget.functionA,
               ),
               MiniCard(
-                content: FontAwesomeIcons.trash,
-                onTap: () {
-                  getModalConfirmDelete(context, widget.id, AppScreens.ground);
-                },
-              ),
-              MiniCard(
                 content: Icons.edit,
                 onTap: () async {
                   await addGroundModal('Editar região', context,
                       FarmTypeOperation.update, '', widget.groundObj);
+                },
+              ),
+              MiniCard(
+                content: FontAwesomeIcons.trash,
+                onTap: () {
+                  getModalConfirmDelete(context, widget.id, AppScreens.ground);
                 },
               ),
             ],

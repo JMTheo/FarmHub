@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="uam.tcc.automacao_horta">
    <application
-        android:label="automacao_horta"
+        android:label="FarmHub"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
