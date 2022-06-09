@@ -110,11 +110,6 @@ class _DetailedPlantPageState extends State<DetailedPlantPage> {
                       });
                 }),
           ),
-          TextButton(
-              onPressed: () {
-                IoTController.to.mudarEstadoLampada();
-              },
-              child: const Text('click')),
           Expanded(
             flex: 2,
             child: Row(
